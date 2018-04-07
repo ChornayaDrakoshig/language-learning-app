@@ -11,85 +11,81 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      anchorEl: null,
-      open: true,
     };
   }
 
-  menuRef: HTMLElement;
-
-  handleProfileClick() {
-    this.setState({ anchorEl: this.menuRef });
-  }
-
-  handleLogoutClick() {
-    this.handleClose();
-  /// logout
-  }
-
-  handleClose() {
-    this.setState({ anchorEl: null });
-  }
-
-  renderUserProfile() {
+  renderLanguageOptions() {
+    console.log(this.props.languages);
+    let showLanguage = [];
+    if (this.props.user && (this.props.languages.length > 0)) {
+      console.log('ok selecting');
+      const languageId = this.props.user.currentCourse;
+      showLanguage = this.props.languages.filter((language) => {return (language.id === languageId)});
+      if (showLanguage.length === 0) showLanguage = this.props.languages[0];
+      console.log(showLanguage);
+    }
+    if (showLanguage.length === 0) {
+      showLanguage = [
+        {
+          id: 0,
+          title: '',
+          image: 'http://question-and-answer-demo.mybluemix.net/images/question-and-answer.svg',
+        },
+      ];
+    }
+    
     return (
-      <React.Fragment>
-        <Grid item sm={4} xs={12}>
-          <Grid
-            container
-            spacing={0}
-            justify="flex-end"
-            alignItems="center"
-            onClick={this.handleProfileClick}
-          >
-            <div className={this.props.classes.hover} onClick={this.handleProfileClick}>
-              <Typography type="subheading" className="header-bar-username">
-                {`${this.props.user.FirstName} ${this.props.user.LastName}`}
-              </Typography>
-              <div
-                ref={div => {
-                  this.menuRef = div;
-                }}
-                style={{ display: 'inline-block' }}
-              >
-                <Avatar alt="Username" src={this.props.user.PhotoUrl} />
-              </div>
-            </div>
+      <Grid item xs={6}>
+        <Grid
+          container
+          spacing={8}
+          justify="flex-start"
+          alignItems="center"
+        >
+          <Grid item>
+            <Avatar alt="language" src={showLanguage[0].image} />
+          </Grid>
+          <Grid item>
+            <Typography type="subheading" className="header-bar-username">
+              {showLanguage[0].title}
+            </Typography>
           </Grid>
         </Grid>
-        <Menu
-          id="simple-menu"
-          className={this.props.classes.menuDown}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(this.state.anchorEl)}
-          onClose={this.handleClose}
+      </Grid>
+    );
+    
+  }
+  
+  renderUserProfile() {
+    return (
+      <Grid item xs={6}>
+        <Grid
+          container
+          spacing={8}
+          justify="flex-end"
+          alignItems="center"
         >
-          <MenuItem onClick={this.handleLogoutClick}>Logout</MenuItem>
-        </Menu>
-      </React.Fragment>
+          <Grid item>
+            <Typography type="subheading" className="header-bar-username">
+              {this.props.user.login}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Avatar alt="Username" src={this.props.user.avatar} />
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
+
   render() {
-    const UserProfile = this.props.user ? this.renderUserProfile() : null;
-    const justify = this.props.user ? 'flex-end' : 'center';
-    const link = '/404';
     return (
       <Grid item xs={12} id="header-bar">
         <AppBar position="static" color="default">
           <Toolbar>
-            <Grid container spacing={8} justify={justify} alignItems="center">
-              <Grid item sm={4} xs={12} className={this.props.user ? 'hide-on-mobile' : ''}>
-                блок
-              </Grid>
-              {UserProfile}
+            <Grid container spacing={8} justify="center" alignItems="center">
+              {this.renderLanguageOptions()}
+              {this.renderUserProfile()}
             </Grid>
           </Toolbar>
         </AppBar>

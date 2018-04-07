@@ -1,11 +1,11 @@
-import React from 'react';
-// import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import CoursesPage from './CoursesPage.jsx';
 
-function CoursesPage(props) {
-  return (
-    <div>
-      {'Это страница всех курсов'}
-    </div>
-  );
+function mapStateToProps(state) {
+  return {
+    coursesOnLearning: (state.courses.allCoursesList.length > 0) ? state.courses.allCoursesList.filter((language) => {return language.onLearning} ) : [], 
+    newCourses: (state.courses.allCoursesList.length > 0) ? state.courses.allCoursesList.filter((language) => {return !language.onLearning} ) : [], 
+  };
 }
-export default CoursesPage;
+
+export default connect(mapStateToProps)(CoursesPage);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import * as redux from 'redux';
 import history from './history';
 import { connect } from 'react-redux';
 import PrivateRoute from './custom-routes/PrivateRoute';
@@ -24,7 +23,7 @@ function AppRouter(props) {
         <PrivateRoute
           exact
           user={props.user}
-          path="/course/:language"
+          path="/course/:languageId"
           component={LanguagePage}
         />
         <PrivateRoute

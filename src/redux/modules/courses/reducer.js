@@ -2,8 +2,8 @@ import {courseConstants} from './actionConstants.js';
 
 const initialState = {
   allCoursesList: [],
-  currentCourse: {},
-  currentModule: {},
+  currentCourse: [],
+  currentModule: [],
 };
 
 export function courses(state = initialState, action) {

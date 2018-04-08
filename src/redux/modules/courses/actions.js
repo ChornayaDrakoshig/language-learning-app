@@ -21,6 +21,53 @@ const allLanguages = [
   },
 ];
 
+/// TODO продумать как получать теги
+/// TODO константы для уровней
+const fakemodule = [
+  {
+    id: 1,
+    title: 'Приветствие',
+    learned: true,
+    tag: 'basic',
+    level: 0,
+  },
+  {
+    id: 2,
+    title: 'Фрукты',
+    learned: true,
+    tag: 'basic',
+    level: 0,
+  },
+  {
+    id: 3,
+    title: 'Овощи',
+    learned: true,
+    tag: 'basic',
+    level: 0,
+  },
+  {
+    id: 4,
+    title: 'Семья',
+    learned: true,
+    tag: 'basic',
+    level: 0,
+  },
+  {
+    id: 5,
+    title: 'Семья 2',
+    learned: true,
+    tag: 'basic',
+    level: 0,
+  },
+  {
+    id: 6,
+    title: 'Путешествия',
+    learned: false,
+    tag: 'travel',
+    level: 2,
+  },
+]
+
 export const getAllCoursesList = () => ({
   type: courseConstants.GET_ALL,
   list: allLanguages,
@@ -28,10 +75,10 @@ export const getAllCoursesList = () => ({
 
 export const getCurrentCourse = () => ({
   type: courseConstants.GET_CURRENT,
-  course: {},
+  course: fakemodule,
 });
 
 export const getCurrentModule = () => ({
   type: courseConstants.GET_INFO,
-  module: {},
+  module: [],
 });

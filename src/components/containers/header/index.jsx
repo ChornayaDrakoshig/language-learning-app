@@ -9,6 +9,7 @@ function mapStateToProps(state) {
       login: 'Anonym', avatar: 'https://silaproject.com/files/img/empty.png'
     },
     languages: (state.courses.allCoursesList.length > 0) ? state.courses.allCoursesList.filter((language) => {return language.onLearning} ) : [], 
+    currentCourse: state.app.currentCourse,
   };
 }
 function mapDispatchToProps(dispatch) {

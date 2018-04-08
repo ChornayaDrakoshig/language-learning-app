@@ -19,7 +19,7 @@ class Header extends React.Component {
     let showLanguage = [];
     if (this.props.user && (this.props.languages.length > 0)) {
       console.log('ok selecting');
-      const languageId = this.props.user.currentCourse;
+      const languageId = this.props.currentCourse;
       showLanguage = this.props.languages.filter((language) => {return (language.id === languageId)});
       if (showLanguage.length === 0) showLanguage = this.props.languages[0];
       console.log(showLanguage);

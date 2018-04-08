@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from 'material-ui/Grid';
-import Avatar from 'material-ui/Avatar';
+//import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
@@ -13,7 +13,7 @@ const styles = {
   },
 };
 
-function LanguagePaper(props) {
+function ModulePaper(props) {
   return (
     <Grid item xs={12} sm={6} md={3} className={props.classes.root}>
       <Paper elevation={1}>
@@ -21,12 +21,10 @@ function LanguagePaper(props) {
           <Grid item>
             <Typography type="title">{props.title}</Typography>  
           </Grid>
+
           <Grid item>
-            <Avatar src={props.image} />  
-          </Grid>
-          <Grid item>
-            <Button component={Link} to={`/course/${props.id}`}>
-              {(props.onLearning) ? 'Открыть курс' : 'Начать курс'}
+            <Button component={Link} to={`/module/${props.id}`}>
+              Открыть модуль
             </Button>
           </Grid>
         </Grid>
@@ -35,4 +33,4 @@ function LanguagePaper(props) {
   );
 }
 
-export default withStyles(styles)(LanguagePaper);
+export default withStyles(styles)(ModulePaper);

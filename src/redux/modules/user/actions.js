@@ -8,7 +8,6 @@ export const login = () => ({
     email: 'chornycmok@mail.com',
     status: 'primary', //// TODO сделать константы для этого
     avatar: 'https://pp.userapi.com/c319824/v319824552/3df8/AA2gQQiV5_s.jpg',
-    currentCourse: 1,
     learningPattern: {
       audio: 25,
       images: 25,

@@ -7,6 +7,7 @@ import ModulePaper from './module-paper';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
 import Filters from './filters';
@@ -29,11 +30,13 @@ class LanguagePage extends React.Component {
 
   render() {
     const {classes} = this.props.classes;
+    
     return (
       <AppPageStructure>
         <Grid className={this.props.classes.root}>
           <Button component={Link} to="/courses/">
-            К списку языков
+            <KeyboardArrowLeft />
+            <Typography>К списку языков</Typography>
           </Button>
         </Grid>
         <Grid container className={this.props.classes.root}>

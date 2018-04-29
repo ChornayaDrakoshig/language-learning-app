@@ -1,28 +1,17 @@
 import React from 'react';
 import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
+import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 import { withStyles } from 'material-ui/styles';
-import PlayArrow from 'material-ui-icons/PlayArrow'
 
 const styles = {
   root: {
-    minWidth: 450,
+    padding: 20,
+    minHeight: 280,
   },
   image: {
     marginTop: 10,
-    maxHeight: 200,
-  },
-  buttonBase: {
-    borderRadius: '30px',
-  },
-  button: {
-    margin: 10,
-    color: "#fff",
-    backgroundColor: "#373737",
-    width: 60,
-    height: 60
+    maxHeight: 150,
   },
 };
 
@@ -45,18 +34,14 @@ class ImageTestPaper extends React.Component {
           </Grid>
                     
           <Grid item>
-            <Grid container justify="space-between">
-              <Grid item>
-                <Typography type="title">Слово</Typography>
-              </Grid>
-              <Grid item>
-              <Typography type="title">-</Typography>  
-              </Grid>
-            <Grid item>
-              <Typography type="title">Перевод</Typography>  
-              </Grid>
-            
-            </Grid>
+          <FormGroup>
+            <ControlLabel>Введите название на иностранном языке:</ControlLabel>
+              <FormControl
+                type="text"
+                value={this.state.value}
+                placeholder="Ваш ответ"
+              />
+            </FormGroup>  
           </Grid>
 
         </Grid>

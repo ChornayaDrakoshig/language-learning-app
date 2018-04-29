@@ -5,7 +5,7 @@ import {createLogger} from 'redux-logger';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {HashRouter} from 'react-router-dom';
-// import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import './assets/styles/clear.css';
 import AppRouter from './components/containers/Router.jsx';
 import reducer from './redux/rootReducer.js';

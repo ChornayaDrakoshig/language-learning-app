@@ -8,6 +8,9 @@ import { withStyles } from 'material-ui/styles';
 import AppPageStructure from 'components/common/app-page-structure';
 import AudioTestPaper from './audio-test-paper';
 import ImageTestPaper from './image-test-paper';
+import SelectTestPaperForWord from './select-test-paper/ForWord';
+import SelectTestPaperForSentence from './select-test-paper/ForSentence';
+import TypingTestPaper from './typing-test-paper';
 
 const styles = {
   root: {
@@ -24,7 +27,8 @@ class ModuleTestingPage extends React.Component {
         {id: 1, type: 'audio'},
         {id: 2, type: 'image'},
         {id: 3, type: 'typing'},
-        {id: 4, type: 'selection'},
+        {id: 4, type: 'selectionW'},
+        {id: 5, type: 'selectionS',}
       ],
       currentQuestion: 0,
     };
@@ -100,8 +104,9 @@ class ModuleTestingPage extends React.Component {
     switch (this.state.questions[this.state.currentQuestion].type) {
       case 'audio': return <AudioTestPaper />;
       case 'image': return <ImageTestPaper />;
-      case 'typing': return <AudioTestPaper />;
-      case 'selection': return <AudioTestPaper />;
+      case 'typing': return <TypingTestPaper />;
+      case 'selectionW': return <SelectTestPaperForWord />;
+      case 'selectionS': return <SelectTestPaperForSentence />;
     }
   }
 

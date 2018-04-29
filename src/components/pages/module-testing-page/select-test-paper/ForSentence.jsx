@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
+import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 
 const styles = {
@@ -10,10 +10,13 @@ const styles = {
     padding: 20,
     minHeight: 280,
   },
+  button: {
+    margin: 10,
+  },
 };
 
 
-class TypingTestPaper extends React.Component {
+class SelectTestPaperForSentence extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -29,17 +32,16 @@ class TypingTestPaper extends React.Component {
           <Grid item>
             <Typography type="title">Слово</Typography>
           </Grid>
-                    
+        
           <Grid item>
-            <FormGroup>
-            <ControlLabel>Введите перевод:</ControlLabel>
-              <FormControl
-                type="text"
-                value={this.state.value}
-                placeholder="Ваш ответ"
-              />
-            </FormGroup>  
-          
+            <Button raised className={classes.button}>Это</Button>
+            <Button raised className={classes.button}>начало</Button>
+          </Grid>
+          <Grid item>
+            <Button raised className={classes.button}>вашего</Button>
+            <Button raised className={classes.button}>ответа</Button>
+            <Button raised disabled className={classes.button}>Это</Button>
+            <Button raised disabled className={classes.button}>начало</Button>
           </Grid>
 
         </Grid>
@@ -49,4 +51,4 @@ class TypingTestPaper extends React.Component {
 }
 }
 
-export default withStyles(styles)(TypingTestPaper);
+export default withStyles(styles)(SelectTestPaperForSentence);

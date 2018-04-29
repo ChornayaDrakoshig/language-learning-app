@@ -2,13 +2,13 @@ import React from 'react';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
-import PlayArrow from 'material-ui-icons/PlayArrow'
 
 const styles = {
   root: {
-    minWidth: 450,
+    padding: 20,
+    minHeight: 280,
   },
   image: {
     marginTop: 10,
@@ -27,7 +27,7 @@ const styles = {
 };
 
 
-class WordPaper extends React.Component {
+class SelectTestPaperForWord extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -41,27 +41,26 @@ class WordPaper extends React.Component {
       <Paper elevation={1} className={classes.root}>
         <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
           <Grid item>
-            <img src="https://pureinfotech.com/wp-content/uploads/2017/09/forest-trees-theme-windows.jpg" className={classes.image} />
+            <Typography type="title">Слово</Typography>
           </Grid>
-
+        
           <Grid item>
-            <IconButton className={classes.button} aria-label="Delete" >
-              <PlayArrow />
-            </IconButton>
+            <Typography type="title">Выберите перевод</Typography>
           </Grid>
-                    
           <Grid item>
-            <Grid container justify="space-between">
+            <Grid container justify="center" alignItems="center" spacing={16}>
               <Grid item>
-                <Typography type="title">Слово</Typography>
+                <Button raised className={classes.button}>Вариант 1</Button>
               </Grid>
               <Grid item>
-              <Typography type="title">-</Typography>  
+                <Button raised className={classes.button}>Вариант 2</Button>
               </Grid>
-            <Grid item>
-              <Typography type="title">Перевод</Typography>  
+              <Grid item>
+                <Button raised secondary className={classes.button}>Вариант 3</Button>
               </Grid>
-            
+              <Grid item>
+                <Button raised className={classes.button}>Вариант 4</Button>
+              </Grid>
             </Grid>
           </Grid>
 
@@ -72,4 +71,4 @@ class WordPaper extends React.Component {
 }
 }
 
-export default withStyles(styles)(WordPaper);
+export default withStyles(styles)(SelectTestPaperForWord);

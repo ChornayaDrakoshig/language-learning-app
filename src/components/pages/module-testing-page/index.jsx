@@ -1,16 +1,24 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getCurrentCourse} from 'redux/modules/courses/actions.js';
+import { getCurrentModule } from 'redux/modules/courses/actions.js';
+import { wait, success } from 'redux/modules/app/actions.js';
 import ModuleTestingPage from './ModuleTestingPage.jsx';
 
 function mapStateToProps(state) {
   return {
-    //newModules: (state.courses.currentCourse.length > 0) ? state.courses.currentCourse.filter((language) => {return !language.learned} ) : [], 
+    userId: state.user.id,
+    learningData: (state.courses.currentModule) ? state.courses.currentModule : [], 
+    extraQuestions: (state.courses.extraQuestions) ? state.courses.extraQuestions : [], 
+    learningPatterns: state.user.learningPatterns,
+    languageId: state.app.currentCourse,
+    appIsLoading: state.app.isLoading,
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    //getCurrentCourse: bindActionCreators(getCurrentCourse, dispatch),
+    wait: bindActionCreators(wait, dispatch),
+    success: bindActionCreators(success, dispatch),
+    getCurrentModule: bindActionCreators(getCurrentModule, dispatch),
   };
 }
 

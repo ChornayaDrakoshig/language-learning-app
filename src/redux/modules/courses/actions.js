@@ -1,84 +1,88 @@
 import {courseConstants} from './actionConstants.js';
+import { wait, success, error } from 'redux/modules/app/actions.js';
+const superagent = require('superagent');
 
-const allLanguages = [
-  {
-    id: 1,
-    title: 'English',
-    image: 'https://qph.fs.quoracdn.net/main-qimg-861c4789bbbeb90f5a8eb253cf0a412a-c',
-    onLearning: true,
-  },
-  {
-    id: 2,
-    title: 'French',
-    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/255px-Flag_of_France.svg.png',
-    onLearning: true,
-  },
-  {
-    id: 3,
-    title: 'Japanese',
-    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png',
-    onLearning: false,
-  },
-];
+export const getAllCoursesList = (userId) => {
+  return dispatch => {
+    dispatch(wait());
+    superagent
+      .get('http://localhost:4000/courses')
+      .set('Accept', 'application/json')
+      .query({ userId })
+      .send()
+      .end((err, res) => {
+        if (err) {
+          dispatch(error('ошибка получения данных о курсах'));
+        } else {
+          const answer = JSON.parse(res.text);
 
-/// TODO продумать как получать теги
-/// TODO константы для уровней
-const fakemodule = [
-  {
-    id: 1,
-    title: 'Приветствие',
-    learned: true,
-    tag: 'basic',
-    level: 0,
-  },
-  {
-    id: 2,
-    title: 'Фрукты',
-    learned: true,
-    tag: 'basic',
-    level: 0,
-  },
-  {
-    id: 3,
-    title: 'Овощи',
-    learned: true,
-    tag: 'basic',
-    level: 0,
-  },
-  {
-    id: 4,
-    title: 'Семья',
-    learned: true,
-    tag: 'basic',
-    level: 0,
-  },
-  {
-    id: 5,
-    title: 'Семья 2',
-    learned: true,
-    tag: 'basic',
-    level: 0,
-  },
-  {
-    id: 6,
-    title: 'Путешествия',
-    learned: false,
-    tag: 'travel',
-    level: 2,
-  },
-]
+          dispatch(getAllCoursesSuccess(answer));
+          dispatch(success());
+        }
+      });
+  };
+};
 
-export const getAllCoursesList = () => ({
+export const getAllCoursesSuccess = (data) => ({
   type: courseConstants.GET_ALL,
-  list: allLanguages,
+  languages: data.languages,
+  onLearning: data.onLearning,
 });
 
-export const getCurrentCourse = () => ({
+export const getCurrentCourse = (userId, languageId) => {
+  return dispatch => {
+    dispatch(wait());
+    superagent
+      .get('http://localhost:4000/learning_modules')
+      .set('Accept', 'application/json')
+      .query({ userId, languageId })
+      .send()
+      .end((err, res) => {
+        if (err) {
+          dispatch(error('ошибка получения данных о mmodule'));
+        } else {
+          const answer = JSON.parse(res.text);
+
+          dispatch(getCurrentCourseSuccess(answer));
+          dispatch(success());
+        }
+      });
+  };
+};
+
+export const getCurrentCourseSuccess = (data) => ({
   type: courseConstants.GET_CURRENT,
-  course: fakemodule,
+  modules: data.modules,
+  tags: data.tags,
+  onLearning: data.onLearning,
 });
 
-export const getCurrentModule = () => ({
+
+export const getCurrentModule = (userId, moduleId) => {
+  return dispatch => {
+    dispatch(wait());
+    superagent
+      .get('http://localhost:4000/module_content')
+      .set('Accept', 'application/json')
+      .query({ userId, moduleId })
+      .send()
+      .end((err, res) => {
+        if (err) {
+          dispatch(error('ошибка получения данных'));
+        } else {
+          const answer = JSON.parse(res.text);
+
+          dispatch(getCurrentModuleSuccess(answer));
+          dispatch(success());
+        }
+      });
+  };
+};
+
+export const getCurrentModuleSuccess = (data) => ({
   type: courseConstants.GET_INFO,
-  module: [],
+  content: data.content,
+  onLearning: data.onLearning,
 });
+
+

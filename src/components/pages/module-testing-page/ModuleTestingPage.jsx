@@ -3,6 +3,7 @@ import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
+import { CircularProgress } from 'material-ui/Progress';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import AppPageStructure from 'components/common/app-page-structure';
@@ -36,6 +37,42 @@ class ModuleTestingPage extends React.Component {
     this.onNextButtonClick=this.onNextButtonClick.bind(this);
   }
   
+  componentDidMount(){
+    if (this.props.learningData.length > 0 ) {
+      this.props.wait();
+    } else {
+      this.props.getCurrentModule(this.props.userId, this.props.match.params.moduleId);
+    }
+    
+    this.setState({questions: this.createTestingMaterials()}, () => this.props.success());
+
+    // TODO собрать тест
+    // TODO success;
+  }
+
+  createTestingMaterials() {
+    let testData = [].concat(this.props.learningData);
+
+    if (this.props.learningData.length > 0) {
+      this.props.extraQuestions.forEach(item => {
+        let dataKey = -1;
+        testData.forEach((data, key) => {
+          if (data.id === item.content_id) dataKey = key;
+        });
+        /// TODO добавлять нужное количество раз в зависимости от спетени ошибки
+        if (dataKey > -1) {
+          testData.push(testData[dataKey]);
+        }
+      });
+      /// TODO выбирать тип исходя из учебного паттерна
+      testData = testData.map(item => {
+          return {...item, type: 'audio'};
+        }
+      );
+    }
+    return testData;
+  }
+
   onNextButtonClick() {
     const number = this.state.currentQuestion;
     
@@ -45,8 +82,6 @@ class ModuleTestingPage extends React.Component {
     else {
       this.setState({currentQuestion: number+1});
     }
-    /// как обращаться к значению предыдущего стейта
-    // или как-то передавать id
   }
   
   renderEndingMessage() {
@@ -102,7 +137,7 @@ class ModuleTestingPage extends React.Component {
   
   renderTestingPaper() {
     switch (this.state.questions[this.state.currentQuestion].type) {
-      case 'audio': return <AudioTestPaper />;
+      case 'audio': return <AudioTestPaper item={this.props.learningData[this.state.currentQuestion]} />;
       case 'image': return <ImageTestPaper />;
       case 'typing': return <TypingTestPaper />;
       case 'selectionW': return <SelectTestPaperForWord />;
@@ -111,13 +146,23 @@ class ModuleTestingPage extends React.Component {
   }
 
 render() {
-  const {classes} = this.props;
-  
-  return (
-    <AppPageStructure>
-      {(this.state.isEnded) ? this.renderEndingMessage() : this.renderTestingBlock()}
-    </AppPageStructure>
-  );
+  if (this.props.appIsLoading) {
+    return (
+      <AppPageStructure>
+      <Grid container justify="center" alignItems="center" spacing={16}>
+        <Grid item>
+          <CircularProgress size={50} />
+        </Grid>        
+      </Grid>
+      </AppPageStructure>  
+    );
+  } else {
+    return (
+      <AppPageStructure>
+        {(this.state.isEnded) ? this.renderEndingMessage() : this.renderTestingBlock()}
+      </AppPageStructure>
+    );
+  }
 }
 }
   

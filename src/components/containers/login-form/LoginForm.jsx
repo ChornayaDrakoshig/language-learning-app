@@ -12,7 +12,6 @@ class LoginForm extends React.Component {
   handleButtonClick() {
     /// TODO поля формы и из валидация
     this.props.login();
-    this.props.getAllCourses();
   }
 
   render() {

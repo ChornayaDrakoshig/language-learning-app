@@ -8,7 +8,7 @@ function mapStateToProps(state) {
     user: (state.user) ? state.user : {
       login: 'Anonym', avatar: 'https://silaproject.com/files/img/empty.png'
     },
-    languages: (state.courses.allCoursesList.length > 0) ? state.courses.allCoursesList.filter((language) => {return language.onLearning} ) : [], 
+    languages: (state.courses.allCoursesList.length > 0) ? state.courses.allCoursesList : [], 
     currentCourse: state.app.currentCourse,
   };
 }

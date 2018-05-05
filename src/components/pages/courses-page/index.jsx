@@ -1,11 +1,22 @@
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {getAllCoursesList} from 'redux/modules/courses/actions.js';
 import CoursesPage from './CoursesPage.jsx';
 
 function mapStateToProps(state) {
   return {
-    coursesOnLearning: (state.courses.allCoursesList.length > 0) ? state.courses.allCoursesList.filter((language) => {return language.onLearning} ) : [], 
-    newCourses: (state.courses.allCoursesList.length > 0) ? state.courses.allCoursesList.filter((language) => {return !language.onLearning} ) : [], 
+    coursesOnLearning: (state.courses.allCoursesList) ? state.courses.allCoursesList.filter((language) => {return language.onLearning} ) : [], 
+    newCourses: (state.courses.allCoursesList) ? state.courses.allCoursesList.filter((language) => {return !language.onLearning} ) : [], 
+    userId: state.user.id,
+    languageId: state.app.currentCourse,
+    appIsLoading: state.app.isLoading,
   };
 }
 
-export default connect(mapStateToProps)(CoursesPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    getAllCoursesList: bindActionCreators(getAllCoursesList, dispatch),
+  };
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CoursesPage);

@@ -25,7 +25,8 @@ class LanguagePage extends React.Component {
   }
   
   componentDidMount() {
-    this.props.getCurrentCourse();
+    this.props.setCurrentCourse(Number (this.props.match.params.languageId));
+    this.props.getCurrentCourse(this.props.userId, this.props.match.params.languageId);
   }
 
   render() {

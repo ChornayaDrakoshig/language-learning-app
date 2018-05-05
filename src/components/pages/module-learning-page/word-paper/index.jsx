@@ -20,7 +20,7 @@ const styles = {
   button: {
     margin: 10,
     color: "#fff",
-    backgroundColor: "#373737",
+//    backgroundColor: "#373737",
     width: 60,
     height: 60
   },
@@ -30,9 +30,25 @@ const styles = {
 class WordPaper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isPlaying: false,
+      audio: new Audio(this.props.content.audioSrc),
+    };
+
+    this.onPlayButtonClick=this.onPlayButtonClick.bind(this);
   }
   
+  onPlayButtonClick() {
+    let status = this.state.isPlaying;
+  
+    if(status === true) {
+      status = false; this.state.audio.play();
+    } else {
+      status = true; this.state.audio.pause();
+    }
+    this.setState({ isPlaying: status });
+  }
+
   render(){
   const {classes} = this.props;
   
@@ -41,25 +57,31 @@ class WordPaper extends React.Component {
       <Paper elevation={1} className={classes.root}>
         <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
           <Grid item>
-            <img src="https://pureinfotech.com/wp-content/uploads/2017/09/forest-trees-theme-windows.jpg" className={classes.image} />
+            <img src={this.props.content.imageSrc} alt={this.props.content.target_language} className={classes.image} />
           </Grid>
 
           <Grid item>
-            <IconButton className={classes.button} aria-label="Delete" >
+            <IconButton
+              className={classes.button}
+              style={{backgroundColor: "#373737"}}
+              aria-label="Delete"
+              onClick={this.onPlayButtonClick}
+            >
               <PlayArrow />
             </IconButton>
+            <audio id="audio"><source src={this.props.content.audioSrc} /></audio>
           </Grid>
                     
           <Grid item>
             <Grid container justify="space-between">
               <Grid item>
-                <Typography type="title">Слово</Typography>
+                <Typography type="title">{this.props.content.target_language}</Typography>
               </Grid>
               <Grid item>
               <Typography type="title">-</Typography>  
               </Grid>
             <Grid item>
-              <Typography type="title">Перевод</Typography>  
+              <Typography type="title">{this.props.content.native_language}</Typography>  
               </Grid>
             
             </Grid>

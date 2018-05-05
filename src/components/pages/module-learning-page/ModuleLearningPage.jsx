@@ -19,13 +19,23 @@ class ModulePage extends React.Component {
     super(props);
     this.state = {
       inEnded: false,
+      currentQuestion: 0,
     };
     
     this.onNextButtonClick=this.onNextButtonClick.bind(this);
   }
   
   onNextButtonClick() {
-    this.setState({isEnded: true});
+    const number = this.state.currentQuestion;
+    
+    if (number === this.props.learningData.length - 1) {
+      this.setState({isEnded: true});  
+    }
+    else {
+      this.setState({currentQuestion: number+1});
+    }
+    /// как обращаться к значению предыдущего стейта
+    // или как-то передавать id
   }
   
   renderEndingMessage() {
@@ -64,7 +74,7 @@ class ModulePage extends React.Component {
         </Button>
       </Grid>
       <Grid container justify="center" alignItems="center" spacing={16} className={classes.root}>
-        <WordPaper />
+        <WordPaper content={this.props.learningData[this.state.currentQuestion]} />
         <Grid item xs={12}>
           <Grid container justify="flex-end" spacing={16} className={classes.root}>
             <Grid item>

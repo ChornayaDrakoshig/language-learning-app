@@ -1,8 +1,7 @@
 import * as React from 'react';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import { Link } from 'react-router-dom';
-import Menu, { MenuItem } from 'material-ui/Menu';
+//import { Link } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
@@ -15,24 +14,18 @@ class Header extends React.Component {
   }
 
   renderLanguageOptions() {
-    console.log(this.props.languages);
-    let showLanguage = [];
-    if (this.props.user && (this.props.languages.length > 0)) {
-      console.log('ok selecting');
-      const languageId = this.props.currentCourse;
-      showLanguage = this.props.languages.filter((language) => {return (language.id === languageId)});
-      if (showLanguage.length === 0) showLanguage = this.props.languages[0];
-      console.log(showLanguage);
-    }
-    if (showLanguage.length === 0) {
-      showLanguage = [
-        {
-          id: 0,
-          title: '',
-          image: 'http://question-and-answer-demo.mybluemix.net/images/question-and-answer.svg',
-        },
-      ];
-    }
+    let showLanguage = {
+      id: 0,
+      language: '',
+      image: 'http://question-and-answer-demo.mybluemix.net/images/question-and-answer.svg',
+    };
+    const languageId = this.props.currentCourse;
+    if (this.props.languages.length > 0) {
+      const showLanguages = this.props.languages.filter((language) => {return (language.id === languageId)});
+      if (showLanguages.length > 0) {
+        showLanguage = showLanguages[0];
+      }
+     } 
     
     return (
       <Grid item xs={6}>
@@ -43,11 +36,11 @@ class Header extends React.Component {
           alignItems="center"
         >
           <Grid item>
-            <Avatar alt="language" src={showLanguage[0].image} />
+            <Avatar alt="language" src={showLanguage.imageSrc} />
           </Grid>
           <Grid item>
             <Typography type="subheading" className="header-bar-username">
-              {showLanguage[0].title}
+              {showLanguage.language}
             </Typography>
           </Grid>
         </Grid>

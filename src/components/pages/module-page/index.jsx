@@ -1,55 +1,19 @@
-import React from 'react';
-import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import { Link } from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
-import AppPageStructure from 'components/common/app-page-structure';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {getCurrentModule} from 'redux/modules/courses/actions.js';
+import ModulePage from './ModulePage.jsx';
 
-const styles = {
-  root: {
-    marginTop: 25,
-  },
-};
+function mapStateToProps(state) {
+  return {
+    learningData: (state.courses.currentModule) ? state.courses.currentModule : [], 
+    userId: state.user.id,
+  };
+}
 
-class ModulePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  
-render() {
-  const { classes } = this.props;
-  
-// TODO id языка дл ссылки назад берем из данных
-  return (
-    <AppPageStructure>
-      <Grid container justify="flex-start" spacing={16} className={classes.root}>
-       <Button component={Link} to={`/course/${1}`}>
-         <KeyboardArrowLeft />
-          <Typography>Назад к списку курсов</Typography>
-        </Button>
-      </Grid>
-      <Grid container justify="center" spacing={16} className={classes.root}>
-        <Grid item xs={6}> 
-          <Paper elevation={1}>
-            <Button component={Link} to={`/module/${this.props.match.params.moduleId}/words`}>
-              <Typography>Изучить слова</Typography>
-            </Button>
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper elevation={1}>
-            <Button component={Link} to={`/module/${this.props.match.params.moduleId}/test`}>
-              <Typography>Пройти тест</Typography>
-            </Button>
-          </Paper>
-        </Grid>
-      </Grid>
-    </AppPageStructure>
-  );
+function mapDispatchToProps(dispatch) {
+  return {
+    getCurrentModule: bindActionCreators(getCurrentModule, dispatch),
+  };
 }
-}
-export default withStyles(styles)(ModulePage);
+
+export default connect(mapStateToProps,mapDispatchToProps)(ModulePage);

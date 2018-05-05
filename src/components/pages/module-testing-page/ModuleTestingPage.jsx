@@ -51,6 +51,7 @@ class ModuleTestingPage extends React.Component {
   }
 
   createTestingMaterials() {
+    const { learningPatterns, extraQuestions, languageId } = this.props;
     let testData = [].concat(this.props.learningData);
 
     if (this.props.learningData.length > 0) {
@@ -59,14 +60,42 @@ class ModuleTestingPage extends React.Component {
         testData.forEach((data, key) => {
           if (data.id === item.content_id) dataKey = key;
         });
-        /// TODO добавлять нужное количество раз в зависимости от спетени ошибки
         if (dataKey > -1) {
-          testData.push(testData[dataKey]);
+          for (let i = 0; i < item.type; i++) {
+            testData.push(testData[dataKey]);
+          }
         }
       });
-      /// TODO выбирать тип исходя из учебного паттерна
+      console.log(this.props.learningPatterns[1]);
+      let breakPointsSum = 0;
+      for (let item in this.props.learningPatterns[this.props.languageId]) {
+        breakPointsSum += this.props.learningPatterns[this.props.languageId][item];
+      }
+      console.log(breakPointsSum);
+      const breakPoint1 = this.props.learningPatterns[this.props.languageId].audio / breakPointsSum;
+      const breakPoint2 = breakPoint1 + this.props.learningPatterns[this.props.languageId].images / breakPointsSum;
+      const breakPoint3 = breakPoint2 + this.props.learningPatterns[this.props.languageId].selecting / breakPointsSum;
+      console.log(breakPoint1);
+      console.log(breakPoint2);
+      console.log(breakPoint3);
+
+      /// TODO если тип "выбор для слова" генерить доп материалы
       testData = testData.map(item => {
-          return {...item, type: 'audio'};
+          const questionType = Math.random();
+          let type = '';
+          if (questionType <= breakPoint1) {
+            type = 'audio';
+          } else if (questionType <= breakPoint2) {
+            type = 'image'
+          } else if (questionType <= breakPoint3 && item.type === 'word') {
+            type = 'selectionW';
+          } else if (questionType <= breakPoint3 && item.type === 'sentence') {
+            type = 'selectionS';
+          } else {
+            type = 'typing';
+          }
+
+          return {...item, type};
         }
       );
     }
@@ -138,10 +167,10 @@ class ModuleTestingPage extends React.Component {
   renderTestingPaper() {
     switch (this.state.questions[this.state.currentQuestion].type) {
       case 'audio': return <AudioTestPaper item={this.props.learningData[this.state.currentQuestion]} />;
-      case 'image': return <ImageTestPaper />;
-      case 'typing': return <TypingTestPaper />;
-      case 'selectionW': return <SelectTestPaperForWord />;
-      case 'selectionS': return <SelectTestPaperForSentence />;
+      case 'image': return <ImageTestPaper item={this.props.learningData[this.state.currentQuestion]} />;
+      case 'typing': return <TypingTestPaper item={this.props.learningData[this.state.currentQuestion]} />;
+      case 'selectionW': return <SelectTestPaperForWord item={this.props.learningData[this.state.currentQuestion]} />;
+      case 'selectionS': return <SelectTestPaperForSentence item={this.props.learningData[this.state.currentQuestion]} />;
     }
   }
 

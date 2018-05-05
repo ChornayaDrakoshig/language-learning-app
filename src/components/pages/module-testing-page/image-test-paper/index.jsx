@@ -30,7 +30,7 @@ class ImageTestPaper extends React.Component {
       <Paper elevation={1} className={classes.root}>
         <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
           <Grid item>
-            <img src="https://pureinfotech.com/wp-content/uploads/2017/09/forest-trees-theme-windows.jpg" alt={this.props.content.target_language} className={classes.image} />
+            <img src="https://pureinfotech.com/wp-content/uploads/2017/09/forest-trees-theme-windows.jpg" alt={this.props.item.target_language} className={classes.image} />
           </Grid>
                     
           <Grid item>

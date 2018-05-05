@@ -56,7 +56,7 @@ class SelectTestPaperForWord extends React.Component {
                 <Button raised className={classes.button}>Вариант 2</Button>
               </Grid>
               <Grid item>
-                <Button raised secondary className={classes.button}>Вариант 3</Button>
+                <Button raised color="secondary" className={classes.button}>Вариант 3</Button>
               </Grid>
               <Grid item>
                 <Button raised className={classes.button}>Вариант 4</Button>

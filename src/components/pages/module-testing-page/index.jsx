@@ -8,7 +8,7 @@ function mapStateToProps(state) {
   return {
     userId: state.user.id,
     learningData: (state.courses.currentModule) ? state.courses.currentModule : [], 
-    extraQuestions: (state.courses.extraQuestions) ? state.courses.extraQuestions : [], 
+    extraQuestions: (state.courses.currentTestExtraQuestions) ? state.courses.currentTestExtraQuestions : [], 
     learningPatterns: state.user.learningPatterns,
     languageId: state.app.currentCourse,
     appIsLoading: state.app.isLoading,

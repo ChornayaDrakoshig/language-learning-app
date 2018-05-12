@@ -12,6 +12,7 @@ import ImageTestPaper from './image-test-paper';
 import SelectTestPaperForWord from './select-test-paper/ForWord';
 import SelectTestPaperForSentence from './select-test-paper/ForSentence';
 import TypingTestPaper from './typing-test-paper';
+import mixArray from 'helper/mixArray.js';
 
 const styles = {
   root: {
@@ -24,14 +25,9 @@ class ModuleTestingPage extends React.Component {
     super(props);
     this.state = {
       inEnded: false,
-      questions: [
-        {id: 1, type: 'audio'},
-        {id: 2, type: 'image'},
-        {id: 3, type: 'typing'},
-        {id: 4, type: 'selectionW'},
-        {id: 5, type: 'selectionS',}
-      ],
+      questions: [],
       currentQuestion: 0,
+      answers: [],
     };
     
     this.onNextButtonClick=this.onNextButtonClick.bind(this);
@@ -45,9 +41,10 @@ class ModuleTestingPage extends React.Component {
     }
     
     this.setState({questions: this.createTestingMaterials()}, () => this.props.success());
+  }
 
-    // TODO собрать тест
-    // TODO success;
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
   }
 
   createTestingMaterials() {
@@ -55,7 +52,8 @@ class ModuleTestingPage extends React.Component {
     let testData = [].concat(this.props.learningData);
 
     if (this.props.learningData.length > 0) {
-      this.props.extraQuestions.forEach(item => {
+      /* добавление дополнительных вопросов */
+      extraQuestions.forEach(item => {
         let dataKey = -1;
         testData.forEach((data, key) => {
           if (data.id === item.content_id) dataKey = key;
@@ -66,50 +64,68 @@ class ModuleTestingPage extends React.Component {
           }
         }
       });
-      console.log(this.props.learningPatterns[1]);
+      /* перемешивание вопросов */
+      testData = mixArray(testData);
+      /* присваивание типа вопроса */
       let breakPointsSum = 0;
-      for (let item in this.props.learningPatterns[this.props.languageId]) {
-        breakPointsSum += this.props.learningPatterns[this.props.languageId][item];
+      for (let item in learningPatterns[languageId]) {
+        breakPointsSum += learningPatterns[languageId][item];
       }
-      console.log(breakPointsSum);
-      const breakPoint1 = this.props.learningPatterns[this.props.languageId].audio / breakPointsSum;
-      const breakPoint2 = breakPoint1 + this.props.learningPatterns[this.props.languageId].images / breakPointsSum;
-      const breakPoint3 = breakPoint2 + this.props.learningPatterns[this.props.languageId].selecting / breakPointsSum;
-      console.log(breakPoint1);
-      console.log(breakPoint2);
-      console.log(breakPoint3);
-
-      /// TODO если тип "выбор для слова" генерить доп материалы
+      
+      const breakPoint1 = learningPatterns[languageId].audio / breakPointsSum;
+      const breakPoint2 = breakPoint1 + learningPatterns[languageId].images / breakPointsSum;
+      const breakPoint3 = breakPoint2 + learningPatterns[languageId].selecting / breakPointsSum;
+      
       testData = testData.map(item => {
-          const questionType = Math.random();
-          let type = '';
-          if (questionType <= breakPoint1) {
-            type = 'audio';
-          } else if (questionType <= breakPoint2) {
-            type = 'image'
-          } else if (questionType <= breakPoint3 && item.type === 'word') {
-            type = 'selectionW';
-          } else if (questionType <= breakPoint3 && item.type === 'sentence') {
-            type = 'selectionS';
-          } else {
-            type = 'typing';
-          }
-
-          return {...item, type};
+        const questionType = Math.random();
+        let type = '';
+        let extra = [];      
+        
+        if (questionType <= breakPoint1) {
+          type = 'audio';
+        } else if (questionType <= breakPoint2) {
+          type = 'image'
+        } else if (questionType <= breakPoint3 && item.type === 'word') {
+          extra = testData.filter(content => (content.id !== item.id && content.type === 'word'));
+          type = 'selectionW';
+        } else if (questionType <= breakPoint3 && item.type === 'sentence') {
+          type = 'selectionS';
+        } else {
+          type = 'typing';
         }
-      );
+
+        return {...item, questionType: type, extra};
+      });
     }
+  
     return testData;
   }
 
-  onNextButtonClick() {
+  onNextButtonClick(answer) {
     const number = this.state.currentQuestion;
-    
-    if (number === this.state.questions.length - 1) {
-      this.setState({isEnded: true});  
+    let newAnswers = [].concat(this.state.answers);
+    let questions = [].concat(this.state.questions);
+    let index = -1;
+    this.state.answers.forEach((item, key) => {
+      if (item.id === answer.id) index = key;
+    })
+    if (index > -1) {
+      newAnswers[index] = answer;
+    } else {
+      newAnswers.push(answer);
+      if (!answer.isCorrect) {
+        index = -1;
+        questions.forEach((item, key) => {
+          if (item.id === answer.id) index = key;
+        });
+        questions.push(questions[index]);
+      }
+    }
+    if (number === questions.length - 1) {
+      this.setState({questions, isEnded: true, answers: newAnswers});  
     }
     else {
-      this.setState({currentQuestion: number+1});
+      this.setState({questions, currentQuestion: number+1, answers: newAnswers});
     }
   }
   
@@ -124,9 +140,11 @@ class ModuleTestingPage extends React.Component {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography>
-            Здесь будут результаты
-          </Typography>
+          
+            <ul>
+              {this.renderAnswers()}
+            </ul>
+          
         </Grid>
         <Grid item xs={6}>
           <Button raised component={Link} to={`/course/${1}`}>
@@ -135,6 +153,15 @@ class ModuleTestingPage extends React.Component {
         </Grid>
       </Grid>
     );
+  }
+
+  renderAnswers() {
+    return this.state.answers.map(answer => {
+      const word = this.props.learningData.filter(item => (answer.id === item.id));
+      return (<li key={answer.id}>
+        {`${answer.isCorrect ? 'Верно' : 'Неверно'}: ${word[0].target_language} - ${word[0].native_language}`}
+      </li>)
+    })
   }
   
   renderTestingBlock() {
@@ -150,32 +177,31 @@ class ModuleTestingPage extends React.Component {
       </Grid>
       <Grid container justify="center" alignItems="center" spacing={16} className={classes.root}>
         {this.renderTestingPaper()}
-        <Grid item xs={12}>
-          <Grid container justify="flex-end" spacing={16} className={classes.root}>
-            <Grid item>
-              <Button raised onClick={this.onNextButtonClick}>
-                <Typography>Дальше</Typography>
-              </Button>
-            </Grid>
-          </Grid>    
-        </Grid>
       </Grid>
       </React.Fragment>
     );
   }
-  
+
   renderTestingPaper() {
-    switch (this.state.questions[this.state.currentQuestion].type) {
-      case 'audio': return <AudioTestPaper item={this.props.learningData[this.state.currentQuestion]} />;
-      case 'image': return <ImageTestPaper item={this.props.learningData[this.state.currentQuestion]} />;
-      case 'typing': return <TypingTestPaper item={this.props.learningData[this.state.currentQuestion]} />;
-      case 'selectionW': return <SelectTestPaperForWord item={this.props.learningData[this.state.currentQuestion]} />;
-      case 'selectionS': return <SelectTestPaperForSentence item={this.props.learningData[this.state.currentQuestion]} />;
+    const { questions, currentQuestion } = this.state;
+    const props = {
+      key: `question-${currentQuestion}`,
+      item: questions[currentQuestion],
+      onNextButtonClick: this.onNextButtonClick,
+    }
+    switch (questions[currentQuestion].questionType) {
+      case 'audio': return <AudioTestPaper key={`question-${currentQuestion}`} item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick} />;
+      case 'image': return <ImageTestPaper key={`question-${currentQuestion}`} item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick}  />;
+      case 'typing': return <TypingTestPaper key={`question-${currentQuestion}`} item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick} />;
+      case 'selectionW': return <SelectTestPaperForWord key={`question-${currentQuestion}`} item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick} />;
+      case 'selectionS': return <SelectTestPaperForSentence {...props} />;
+
+      default: return <TypingTestPaper item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick} />;
     }
   }
 
 render() {
-  if (this.props.appIsLoading) {
+  if (this.props.appIsLoading || this.state.questions.length === 0) {
     return (
       <AppPageStructure>
       <Grid container justify="center" alignItems="center" spacing={16}>

@@ -1,16 +1,15 @@
 import React from 'react';
 import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 import { withStyles } from 'material-ui/styles';
 import PlayArrow from 'material-ui-icons/PlayArrow';
-
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import TestingPageWrapper from '../TestingPageWrapper';
 
 const styles = {
   root: {
-    padding: 20,
-    minHeight: 280,
   },
   buttonBase: {
     borderRadius: '30px',
@@ -31,8 +30,11 @@ class AudioTestPaper extends React.Component {
     this.state = {
       isPlaying: false,
       audio: new Audio(this.props.item.audioSrc),
+      value: '',
     };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.onPlayButtonClick=this.onPlayButtonClick.bind(this);
   }
   
@@ -47,41 +49,69 @@ class AudioTestPaper extends React.Component {
     this.setState({ isPlaying: status });
   }
 
-  render(){
-  const {classes} = this.props;
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
 
-  return (
-    <Grid item xs={12} >
-      <Paper elevation={1} className={classes.root}>
-        <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
+  handleSubmit(event) {
+    event.preventDefault();
+    const answer = {
+      id: this.props.item.id,
+      isCorrect: (this.state.value.trim().toLowerCase() === this.props.item.target_language.toLowerCase()),
+      questionType: 'audio',
+    };
+
+    this.props.onNextButtonClick(answer);
+  }
+ 
+  renderQuestion() {
+    const {classes} = this.props;
+
+    return (
+      <React.Fragment>
         <Grid item>
-            <IconButton
-              className={classes.button}
-              style={{backgroundColor: "#373737"}}
-              aria-label="Delete"
-              onClick={this.onPlayButtonClick}
-            >
-              <PlayArrow />
-            </IconButton>
-            <audio id="audio"><source src={this.props.item.audioSrc} /></audio>
-          </Grid>
-                    
-          <Grid item>
-            <FormGroup>
-              <ControlLabel>Введите услышанное</ControlLabel>
-              <FormControl
-                type="text"
-                value={this.state.value}
-                placeholder="Ваш ответ"
-              />
-            </FormGroup>
-          </Grid>
-
+          <IconButton
+            className={classes.button}
+            style={{backgroundColor: "#373737"}}
+            aria-label="Delete"
+            onClick={this.onPlayButtonClick}
+          >
+            <PlayArrow />
+          </IconButton>
+          <audio id="audio"><source src={this.props.item.audioSrc} alt={this.props.item.native_language} /></audio>
         </Grid>
-      </Paper>
-    </Grid>
-  );
-}
+                    
+        <Grid item>
+          <FormGroup>
+            <ControlLabel>Введите услышанное</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.value}
+              placeholder="Ваш ответ"
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
+  renderButton() {
+    return (
+      <Button raised onClick={this.handleSubmit}>
+        <Typography>Дальше</Typography>
+      </Button>
+    ); 
+  }
+
+  render(){  
+    return (
+      <TestingPageWrapper 
+        question={this.renderQuestion()}
+        button={this.renderButton()}
+      />
+    );
+  }
 }
 
 export default withStyles(styles)(AudioTestPaper);

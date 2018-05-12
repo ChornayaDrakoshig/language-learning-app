@@ -1,22 +1,21 @@
 import React from 'react';
-import { Alert } from 'react-bootstrap';
+import Grid from 'material-ui/Grid';
 import LoginForm from './login-form';
-
-/*
-<Alert bsStyle="warning">
-  <strong>Holy guacamole!</strong> Best check yo self, you're not looking too
-  good.
-</Alert>
-*/
+import LoadingContainer from 'components/common/loading-container';
 
 function LoginPage(props) {
   return (
-    <div>
-      <div>
-        {props.errorMessage}
-      </div>
-      <LoginForm />
-    </div>
+    <LoadingContainer
+      appIsLoading={props.appIsLoading}
+      appHasNoContentYet={false}
+      errorMessage={props.errorMessage}
+    >
+      <Grid container justify="center" alignItems="center" spacing={16}>
+        <Grid item>
+          <LoginForm />
+        </Grid>
+      </Grid>
+    </LoadingContainer>
   );
 }
 export default LoginPage;

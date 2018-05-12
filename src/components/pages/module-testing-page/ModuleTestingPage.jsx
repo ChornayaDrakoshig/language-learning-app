@@ -6,12 +6,13 @@ import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import { CircularProgress } from 'material-ui/Progress';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
+import LoadingContainer from 'components/common/loading-container';
 import AppPageStructure from 'components/common/app-page-structure';
-import AudioTestPaper from './audio-test-paper';
-import ImageTestPaper from './image-test-paper';
-import SelectTestPaperForWord from './select-test-paper/ForWord';
-import SelectTestPaperForSentence from './select-test-paper/ForSentence';
-import TypingTestPaper from './typing-test-paper';
+import AudioTestPaper from 'components/common/testing-papers/audio-test-paper';
+import ImageTestPaper from 'components/common/testing-papers/image-test-paper';
+import SelectTestPaperForWord from 'components/common/testing-papers/select-test-paper/ForWord';
+import SelectTestPaperForSentence from 'components/common/testing-papers/select-test-paper/ForSentence';
+import TypingTestPaper from 'components/common/testing-papers/typing-test-paper';
 import mixArray from 'helper/mixArray.js';
 
 const styles = {
@@ -68,13 +69,14 @@ class ModuleTestingPage extends React.Component {
       testData = mixArray(testData);
       /* присваивание типа вопроса */
       let breakPointsSum = 0;
-      for (let item in learningPatterns[languageId]) {
-        breakPointsSum += learningPatterns[languageId][item];
+      const learningPattern = learningPatterns[languageId] || learningPatterns[0];
+      for (let item in learningPattern) {
+        breakPointsSum += learningPattern[item];
       }
       
-      const breakPoint1 = learningPatterns[languageId].audio / breakPointsSum;
-      const breakPoint2 = breakPoint1 + learningPatterns[languageId].images / breakPointsSum;
-      const breakPoint3 = breakPoint2 + learningPatterns[languageId].selecting / breakPointsSum;
+      const breakPoint1 = learningPattern.audio / breakPointsSum;
+      const breakPoint2 = breakPoint1 + learningPattern.images / breakPointsSum;
+      const breakPoint3 = breakPoint2 + learningPattern.selecting / breakPointsSum;
       
       testData = testData.map(item => {
         const questionType = Math.random();
@@ -200,25 +202,19 @@ class ModuleTestingPage extends React.Component {
     }
   }
 
-render() {
-  if (this.props.appIsLoading || this.state.questions.length === 0) {
+  render() {
     return (
       <AppPageStructure>
-      <Grid container justify="center" alignItems="center" spacing={16}>
-        <Grid item>
-          <CircularProgress size={50} />
-        </Grid>        
-      </Grid>
+        <LoadingContainer
+          appIsLoading={this.props.appIsLoading}
+          appHasNoContentYet={this.state.questions.length === 0}
+          errorMessage={this.props.errorMessage}
+        >
+          {(this.state.isEnded) ? this.renderEndingMessage() : this.renderTestingBlock()}
+        </LoadingContainer>
       </AppPageStructure>  
     );
-  } else {
-    return (
-      <AppPageStructure>
-        {(this.state.isEnded) ? this.renderEndingMessage() : this.renderTestingBlock()}
-      </AppPageStructure>
-    );
   }
-}
 }
   
 export default withStyles(styles)(ModuleTestingPage);

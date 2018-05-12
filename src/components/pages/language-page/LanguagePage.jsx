@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-// import {Link} from 'react-router-dom';
+import LoadingContainer from 'components/common/loading-container';
 import AppPageStructure from 'components/common/app-page-structure';
 import ModulePaper from './module-paper';
 import Paper from 'material-ui/Paper';
@@ -31,26 +31,16 @@ class LanguagePage extends React.Component {
   }
 
   renderModules() {
-    if (this.props.appIsLoading || this.props.modules.length === 0) {
-      return (
-        <Grid container justify="center" alignItems="center" spacing={16}>
-          <Grid item>
-            <CircularProgress size={50} />
-          </Grid>        
-        </Grid>
-      );
-    } else {
-      return (
-        <Grid container justify="flex-start" spacing={16}>
-          {this.props.modules.map((module) => 
-           <ModulePaper 
-              key={module.id}
-              module={module}
-           />
-          )}
-        </Grid>
-      );
-    }
+    return (
+      <Grid container justify="flex-start" spacing={16}>
+        {this.props.modules.map((module) => 
+          <ModulePaper
+            key={module.id}
+            module={module}
+          />
+        )}
+      </Grid>
+    );
   }
 
   render() {
@@ -76,7 +66,13 @@ class LanguagePage extends React.Component {
         <Grid container className={this.props.classes.root}>
           <Filters />
         </Grid>
-        {this.renderModules()}
+        <LoadingContainer
+          appIsLoading={this.props.appIsLoading}
+          appHasNoContentYet={this.props.modules.length === 0}
+          errorMessage={this.props.errorMessage}
+        >
+          {this.renderModules()}
+        </LoadingContainer>
       </AppPageStructure>
     );
   }

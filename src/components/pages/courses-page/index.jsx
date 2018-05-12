@@ -9,6 +9,7 @@ function mapStateToProps(state) {
     newCourses: (state.courses.allCoursesList) ? state.courses.allCoursesList.filter((language) => {return !language.onLearning} ) : [], 
     userId: state.user.id,
     appIsLoading: state.app.isLoading,
+    errorMessage: state.app.alert,
   };
 }
 

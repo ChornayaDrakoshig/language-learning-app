@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     learningPatterns: state.user.learningPatterns,
     languageId: state.app.currentCourse,
     appIsLoading: state.app.isLoading,
+    errorMessage: state.app.alert,
   };
 }
 function mapDispatchToProps(dispatch) {

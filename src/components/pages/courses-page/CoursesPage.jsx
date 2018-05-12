@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
+import LoadingContainer from 'components/common/loading-container';
 import AppPageStructure from 'components/common/app-page-structure';
 import LanguagePaper from './language-paper';
 import { CircularProgress } from 'material-ui/Progress';
@@ -65,25 +66,19 @@ class CoursesPage extends React.Component {
     }
   }
 
-  render(){
-    if (this.props.appIsLoading  || (this.props.coursesOnLearning.length === 0 &&  this.props.newCourses.length === 0)) {
-      return (
-        <AppPageStructure>
-        <Grid container justify="center" alignItems="center" spacing={16}>
-          <Grid item>
-            <CircularProgress size={50} />
-          </Grid>        
-        </Grid>
-        </AppPageStructure>  
-      );
-    } else {
-      return (
-        <AppPageStructure>
+  render() {
+    return (
+      <AppPageStructure>
+        <LoadingContainer
+          appIsLoading={this.props.appIsLoading}
+          appHasNoContentYet={this.props.coursesOnLearning.length === 0 &&  this.props.newCourses.length === 0}
+          errorMessage={this.props.errorMessage}
+        >
           {this.renderCoursesOnLearning()}
           {this.renderNewCourses()}
-        </AppPageStructure>
-      );
-    }
+        </LoadingContainer>
+      </AppPageStructure>  
+    );
   }
 }
 export default CoursesPage;

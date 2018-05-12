@@ -6,9 +6,8 @@ import Select from 'material-ui/Select';
 import Checkbox from 'material-ui/Checkbox';
 import { InputAdornment } from 'material-ui/Input';
 import TextField from 'material-ui/TextField';
-
 import Search from 'material-ui-icons/Search';
-//import AccountCircle from '@material-ui/icons/AccountCircle';
+// TODO экшены для app которые контролируют отображение выше
 
 class Filters extends React.Component {
   constructor(props) {
@@ -19,7 +18,7 @@ class Filters extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <TextField
             id="input-with-icon-textfield"
             InputProps={{
@@ -31,7 +30,7 @@ class Filters extends React.Component {
             }}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={6}>
           <FormControl >
             <Select
               native
@@ -45,7 +44,7 @@ class Filters extends React.Component {
             <FormHelperText>Without label</FormHelperText>
           </FormControl>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <FormControlLabel
             control={
               <Checkbox
@@ -58,7 +57,7 @@ class Filters extends React.Component {
             label="Изученные модули"
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <FormControlLabel
             control={
               <Checkbox

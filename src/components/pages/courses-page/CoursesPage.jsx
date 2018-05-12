@@ -4,7 +4,6 @@ import Typography from 'material-ui/Typography';
 import LoadingContainer from 'components/common/loading-container';
 import AppPageStructure from 'components/common/app-page-structure';
 import LanguagePaper from './language-paper';
-import { CircularProgress } from 'material-ui/Progress';
 
 class CoursesPage extends React.Component {
   constructor(props) {

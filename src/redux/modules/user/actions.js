@@ -35,7 +35,6 @@ export const loginSuccess = (data) => ({
     status: data.account_status,
     //// TODO сделать аватары
     avatar: 'https://pp.userapi.com/c319824/v319824552/3df8/AA2gQQiV5_s.jpg',
-    // TODO если не находим паттерн с нужным индексом, берем по умолчанию
     learningPatterns: {
       '0': {
         audio: (25 / 25),

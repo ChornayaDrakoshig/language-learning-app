@@ -31,11 +31,13 @@ class ImageTestPaper extends React.Component {
   }
 
   handleSubmit(event) {
+    // TODO обработка знаков препинания
     event.preventDefault();
     const answer = {
       id: this.props.item.id,
       isCorrect: (this.state.value.trim().toLowerCase() === this.props.item.target_language.toLowerCase()),
       questionType: 'image',
+      answer: this.state.value,
     };
 
     this.props.onNextButtonClick(answer);

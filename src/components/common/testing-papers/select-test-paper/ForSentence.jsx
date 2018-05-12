@@ -49,12 +49,14 @@ class SelectTestPaperForSentence extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
     if (this.state.value.length > 0) {
+      const value = this.state.value.map(item => item.name).join(' ');
+      // TODO обработка знаков препинания
       const answer = {
         id: this.props.item.id,
-        isCorrect: (this.state.value.map(item => item.name).join(' ') === this.props.item.target_language),
+        isCorrect: (value === this.props.item.target_language),
         questionType: 'selection',
+        answer: value,
       };
   
       this.props.onNextButtonClick(answer);

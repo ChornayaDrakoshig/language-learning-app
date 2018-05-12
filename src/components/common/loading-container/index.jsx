@@ -1,6 +1,5 @@
 import React from 'react';
 import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import { Alert } from 'react-bootstrap';
 import { withStyles } from 'material-ui/styles';

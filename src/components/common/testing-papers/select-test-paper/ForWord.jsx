@@ -25,8 +25,9 @@ const styles = {
 
 const createOptions = (item) => {
   let options = [].concat(item.extra.slice(0,3));
-  delete item.extra;
-  options.push(item);
+  const newItem = Object.assign({}, item);
+  delete newItem.extra;
+  options.push(newItem);
   options = mixArray(options);
 
   return options;
@@ -50,11 +51,17 @@ class SelectTestPaperForWord extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    let index = -1;
+    this.state.options.forEach((item, key) => {
+      if (item.id === this.state.value) index = key;
+    });
+
     if (this.state.value > 0) {
       const answer = {
         id: this.props.item.id,
         isCorrect: (this.props.item.id === this.state.value),
         questionType: 'selection',
+        answer: this.state.options[index].target_language,
       };
   
       this.props.onNextButtonClick(answer);

@@ -5,8 +5,6 @@ const initialState = {
   alert: '',
   currentCourse: 0,
 };
-// TODO по умолчанию ноль,  как-то сохранять и получать при загрузке последний курс
-// а так обновляется по ходу
 
 export function app(state = initialState, action) {
   switch (action.type) {

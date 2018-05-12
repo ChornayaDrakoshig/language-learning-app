@@ -6,9 +6,9 @@ import LanguagePage from './LanguagePage.jsx';
 
 function mapStateToProps(state) {
   return {
-    learnedModules: (state.courses.currentCourse) ? state.courses.currentCourse.filter((language) => {return language.learned} ) : [], 
-    newModules: (state.courses.currentCourse) ? state.courses.currentCourse.filter((language) => {return !language.learned} ) : [], 
+    modules: (state.courses.currentCourse) ? state.courses.currentCourse : [], 
     userId: state.user.id,
+    appIsLoading: state.app.isLoading,
   };
 }
 function mapDispatchToProps(dispatch) {

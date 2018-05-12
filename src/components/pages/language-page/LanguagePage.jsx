@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
+import { CircularProgress } from 'material-ui/Progress';
 import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
 import Filters from './filters';
@@ -27,6 +28,29 @@ class LanguagePage extends React.Component {
   componentDidMount() {
     this.props.setCurrentCourse(Number (this.props.match.params.languageId));
     this.props.getCurrentCourse(this.props.userId, this.props.match.params.languageId);
+  }
+
+  renderModules() {
+    if (this.props.appIsLoading || this.props.modules.length === 0) {
+      return (
+        <Grid container justify="center" alignItems="center" spacing={16}>
+          <Grid item>
+            <CircularProgress size={50} />
+          </Grid>        
+        </Grid>
+      );
+    } else {
+      return (
+        <Grid container justify="flex-start" spacing={16}>
+          {this.props.modules.map((module) => 
+           <ModulePaper 
+              key={module.id}
+              module={module}
+           />
+          )}
+        </Grid>
+      );
+    }
   }
 
   render() {
@@ -52,33 +76,7 @@ class LanguagePage extends React.Component {
         <Grid container className={this.props.classes.root}>
           <Filters />
         </Grid>
-        <Grid className={this.props.classes.root}>
-          <Typography  type="title">Вы изучили</Typography>
-        </Grid>
-        <Grid container justify="flex-start" spacing={16}>
-          {this.props.learnedModules.map((module) => 
-           <ModulePaper 
-              key={module.id}
-              id={module.id}
-              title={module.title}
-           />
-          )}
-        </Grid>
-        <Grid className={this.props.classes.root}>
-          <Divider />
-        </Grid>
-        <Grid className={this.props.classes.root}>
-          <Typography  type="title">Модули для изучения</Typography>
-        </Grid>
-        <Grid container justify="flex-start" spacing={16}>
-          {this.props.newModules.map((module) => 
-           <ModulePaper 
-              key={module.id}
-              id={module.id}
-              title={module.title}
-           />
-          )}
-        </Grid>
+        {this.renderModules()}
       </AppPageStructure>
     );
   }

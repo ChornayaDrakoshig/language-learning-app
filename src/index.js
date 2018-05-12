@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import thunkMiddleware from 'redux-thunk';
 import {createLogger} from 'redux-logger';
 import {createStore, applyMiddleware} from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
 import {HashRouter} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -14,9 +15,11 @@ const loggerMiddleware = createLogger();
 
 const store = createStore(
   reducer,
-  applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
+  composeWithDevTools(
+    applyMiddleware(
+      thunkMiddleware,
+      loggerMiddleware
+    )
   )
 );
 ReactDOM.render(

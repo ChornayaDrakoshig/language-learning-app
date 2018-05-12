@@ -15,43 +15,58 @@ class CoursesPage extends React.Component {
     this.props.getAllCoursesList(this.props.userId);
   }
   
-  renderCourses() {
-return (
-  <React.Fragment>
-    <Grid>
-      <Typography  type="title">Вы изучаете</Typography>
-    </Grid>
-    <Grid container justify="flex-start" spacing={16}>
-      {this.props.coursesOnLearning.map((language) => 
-        <LanguagePaper 
-          key={language.id}
-          id={language.id}
-          title={language.language}
-          image={language.imageSrc}
-          onLearning={language.onLearnig}
-        />
-      )}
-    </Grid>
-    <Grid>
-      <Typography  type="title">Доступные курсы</Typography>
-    </Grid>
-    <Grid container justify="flex-start" spacing={16}>
-      {this.props.newCourses.map((language) => 
-        <LanguagePaper 
-          key={language.id}
-          id={language.id}
-          title={language.language}
-          image={language.imageSrc}
-          onLearning={language.onLearnig}
-        />
-      )}
-    </Grid>
-    </React.Fragment>
-  );
+  renderNewCourses() {
+    if (this.props.newCourses) {
+      return (
+        <React.Fragment>
+          <Grid>
+            <Typography type="title">Доступные курсы</Typography>
+          </Grid>
+          <Grid container justify="flex-start" spacing={16}>
+            {this.props.newCourses.map((language) => 
+              <LanguagePaper 
+                key={language.id}
+                id={language.id}
+                title={language.language}
+                image={language.imageSrc}
+                onLearning={language.onLearnig}
+              />
+            )}
+          </Grid>
+        </React.Fragment>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  renderCoursesOnLearning() {
+    if (this.props.coursesOnLearning) {
+      return (
+        <React.Fragment>
+          <Grid>
+            <Typography  type="title">Вы изучаете</Typography>
+          </Grid>
+          <Grid container justify="flex-start" spacing={16}>
+            {this.props.coursesOnLearning.map((language) => 
+              <LanguagePaper 
+                key={language.id}
+                id={language.id}
+                title={language.language}
+                image={language.imageSrc}
+                onLearning={language.onLearnig}
+              />
+            )}
+          </Grid>
+        </React.Fragment>
+      );    
+    } else {
+      return null;
+    }
   }
 
   render(){
-    if (this.props.appIsLoading) {
+    if (this.props.appIsLoading  || (this.props.coursesOnLearning.length === 0 &&  this.props.newCourses.length === 0)) {
       return (
         <AppPageStructure>
         <Grid container justify="center" alignItems="center" spacing={16}>
@@ -64,10 +79,11 @@ return (
     } else {
       return (
         <AppPageStructure>
-          {this.renderCourses()}
+          {this.renderCoursesOnLearning()}
+          {this.renderNewCourses()}
         </AppPageStructure>
       );
     }
-}
+  }
 }
 export default CoursesPage;

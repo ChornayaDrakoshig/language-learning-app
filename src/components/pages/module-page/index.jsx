@@ -7,6 +7,7 @@ function mapStateToProps(state) {
   return {
     learningData: (state.courses.currentModule) ? state.courses.currentModule : [], 
     userId: state.user.id,
+    languageId: state.app.currentCourse,
   };
 }
 

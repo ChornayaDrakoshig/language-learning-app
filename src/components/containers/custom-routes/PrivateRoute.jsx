@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, RouteProps, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 const PrivateRoute = (props) => {
   const { component: Component, user, ...rest } = props;
@@ -9,7 +9,6 @@ const PrivateRoute = (props) => {
       {...rest}
       render={routeProps => {
         if ('id' in user) {
-          <Redirect to="/courses" />;
           return <Component {...routeProps} />;
         }
         return <Redirect to="/login" />;

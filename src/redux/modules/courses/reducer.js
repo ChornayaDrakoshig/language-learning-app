@@ -9,7 +9,9 @@ new Audio("http://localhost:4000/1.mp3"),
 const initialState = {
   allCoursesList: [],
   currentCourse: [],
+  tagsList: [],
   currentModule: [],
+  currentTestExtraQuestions: [],
 };
 
 export function courses(state = initialState, action) {
@@ -17,10 +19,7 @@ export function courses(state = initialState, action) {
     case courseConstants.GET_ALL:
       return handleGetAllCourses(state, action);
     case courseConstants.GET_CURRENT:
-      return {
-        ...state,
-        currentCourse: action.modules,
-      };
+      return handleGetGurrentCourse(state, action);
     case courseConstants.GET_INFO:
       return handleGetModule(state, action);
     
@@ -29,23 +28,37 @@ export function courses(state = initialState, action) {
 }
 
 const handleGetAllCourses = (state, data) => {
-  const newCourses = data.languages.map((item) => {
-    const language = item;
-    const started = data.onLearning.filter(item => {return (item.language_id === language.id)});
+  const newCourses = data.languages.map((language) => {
+    const onLearning = data.onLearning.filter(item => {return (item.language_id === language.id)});
 
     return {
       ...language,
-      imageSrc: `${serverAdress}languages/${item.id}.jpg`,
-      onLearning: (started.length > 0),
+      imageSrc: `${serverAdress}languages/${language.id}.jpg`,
+      onLearning: (onLearning.length > 0),
     }
   });
 
   return { ...state, allCoursesList: newCourses };
 };
 
+const handleGetGurrentCourse = (state, data) => {
+  const course = data.modules.map(module => {
+    const onLearning = data.onLearning.filter(item => {return (item.module_id === module.id)});
+
+    return {
+      ...module,
+      onLearning: (onLearning.length > 0),
+    }
+  });
+  
+  return {
+    ...state,
+    currentCourse: course,
+    tagsList: data.tags,
+  };
+}
 
 const handleGetModule = (state, data) => {
-  // TODO: add onlearning
   let newModule = data.content.map(item => {
     return {
       ...item,
@@ -54,7 +67,7 @@ const handleGetModule = (state, data) => {
     }
   });
 
-  return { ...state, currentModule: newModule };
+  return { ...state, currentModule: newModule, currentTestExtraQuestions: data.onLearning};
 };
 
 export default courses;

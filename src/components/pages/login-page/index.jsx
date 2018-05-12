@@ -1,12 +1,11 @@
-import React from 'react';
-import LoginForm from 'components/containers/login-form';
-//import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import LoginPage from './LoginPage.jsx';
 
-function LoginPage(props) {
-  return (
-    <div>
-      <LoginForm />
-    </div>
-  );
+function mapStateToProps(state) {
+  return {
+    appIsLoading: state.app.isLoading,
+    errorMessage: state.app.alert,
+  };
 }
-export default LoginPage;
+
+export default connect(mapStateToProps)(LoginPage);

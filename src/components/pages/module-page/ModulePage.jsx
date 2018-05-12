@@ -26,11 +26,10 @@ class ModulePage extends React.Component {
 render() {
   const { classes } = this.props;
   
-// TODO id языка дл ссылки назад берем из данных
   return (
     <AppPageStructure>
       <Grid container justify="flex-start" spacing={16} className={classes.root}>
-       <Button component={Link} to={`/course/${1}`}>
+       <Button component={Link} to={`/course/${this.props.languageId}`}>
          <KeyboardArrowLeft />
           <Typography>Назад к списку курсов</Typography>
         </Button>

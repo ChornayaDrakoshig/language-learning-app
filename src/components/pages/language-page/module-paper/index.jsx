@@ -27,11 +27,13 @@ render() {
       <Paper elevation={1}>
         <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
           <Grid item>
-            <Typography type="title">{this.props.title}</Typography>  
+            <Typography type="title">{this.props.module.title}</Typography>  
           </Grid>
-
           <Grid item>
-            <Button component={Link} to={`/module/${this.props.id}`}>
+            <Typography type="title">{(this.props.module.onLearning) ? 'изучается' : ''}</Typography>  
+          </Grid>
+          <Grid item>
+            <Button component={Link} to={`/module/${this.props.module.id}`}>
               Открыть модуль
             </Button>
           </Grid>

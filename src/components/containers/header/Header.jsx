@@ -17,7 +17,7 @@ class Header extends React.Component {
     let showLanguage = {
       id: 0,
       language: '',
-      image: 'http://question-and-answer-demo.mybluemix.net/images/question-and-answer.svg',
+      imageSrc: 'http://question-and-answer-demo.mybluemix.net/images/question-and-answer.svg',
     };
     const languageId = this.props.currentCourse;
     if (this.props.languages.length > 0) {

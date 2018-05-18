@@ -1,21 +1,9 @@
 import mixArray from './mixArray.js';
 
-const composeTest = (learningData, extraQuestions, learningPatterns, languageId) => {
+const composeTest = (learningData, learningPatterns, languageId) => {
   let testData = [].concat(learningData);
 
   if (learningData.length > 0) {
-    /* добавление дополнительных вопросов */
-    extraQuestions.forEach(item => {
-      let dataKey = -1;
-      testData.forEach((data, key) => {
-        if (data.id === item.content_id) dataKey = key;
-      });
-      if (dataKey > -1) {
-        for (let i = 0; i < item.type; i++) {
-          testData.push(testData[dataKey]);
-        }
-      }
-    });
     /* перемешивание вопросов */
     testData = mixArray(testData);
     /* присваивание типа вопроса */

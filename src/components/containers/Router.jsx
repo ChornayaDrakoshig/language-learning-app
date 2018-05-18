@@ -13,6 +13,7 @@ import ModuleTestingPage from 'components/pages/module-testing-page';
 import ModulePage from 'components/pages/module-page';
 import ProfilePage from 'components/pages/profile-page';
 import SignupPage from 'components/pages/signup-page';
+import RevisionPage from 'components/pages/revision-page';
 
 function AppRouter(props) {
   return (
@@ -55,6 +56,12 @@ function AppRouter(props) {
           user={props.user}
           path="/profile"
           component={ProfilePage}
+        />
+        <PrivateRoute
+          exact
+          user={props.user}
+          path="/revision-test/:languageId"
+          component={RevisionPage}
         />
         <Route exact path="/404" component={ErrorPage} />
 

@@ -85,4 +85,73 @@ export const getCurrentModuleSuccess = (data) => ({
   onLearning: data.onLearning,
 });
 
+export const updateModuleAfterTesting = (userId, moduleId, resultsByTaskType) => {
+  // TODO post from it!
+  return dispatch => {
+    superagent
+      .get('http://localhost:4000/upd_module')
+      .set('Accept', 'application/json')
+      .query({ userId, moduleId, ...resultsByTaskType })
+      .send()
+      .end((err, res) => {
+        if (err) {
+          dispatch(error('ошибка обновления информации'));
+        } else {
+          //const answer = JSON.parse(res.text);
+          //dispatch(getCurrentModuleSuccess(answer));          
+          dispatch(success());
+        }
+      });
+  };
+  
+};
 
+export const updateModuleAfterLearning = (userId, moduleId) => {
+  
+  return dispatch => {
+    superagent
+      .get('http://localhost:4000/upd_module')
+      .set('Accept', 'application/json')
+      .query({ userId, moduleId })
+      .send()
+      .end((err, res) => {
+        if (err) {
+          dispatch(error('ошибка обновления информации'));
+        } else {
+          //const answer = JSON.parse(res.text);
+          //dispatch(getCurrentModuleSuccess(answer));          
+          dispatch(success());
+        }
+      });
+  };
+  
+};
+
+export const getRevisionModules = (userId, languageId) => {
+  
+  return dispatch => {
+    dispatch(wait());
+    superagent
+      .get('http://localhost:4000/resent_modules')
+      .set('Accept', 'application/json')
+      .query({ userId, languageId })
+      .send()
+      .end((err, res) => {
+        if (err) {
+          dispatch(error('ошибка составления сборного теста'));
+        } else {
+          if (res.text) {
+            const answer = JSON.parse(res.text);
+            dispatch(getRevisionModulesSuccess(answer));
+          }
+          dispatch(success());
+        }
+      });
+  };
+  
+};
+
+export const getRevisionModulesSuccess = (data) => ({
+  type: courseConstants.REVISION,
+  modules: data.content,
+});

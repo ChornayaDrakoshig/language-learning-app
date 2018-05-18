@@ -55,9 +55,9 @@ class LanguagePage extends React.Component {
         <Grid container className={this.props.classes.root}>
           <Grid item xs={12}>
             <Paper elevation={1}>
-            <Button>
-              Начать повторение
-            </Button>
+              <Button component={Link} to={`/revision-test/${this.props.match.params.languageId}`}>
+                Начать повторение
+              </Button>
             </Paper>
           </Grid>
         </Grid>

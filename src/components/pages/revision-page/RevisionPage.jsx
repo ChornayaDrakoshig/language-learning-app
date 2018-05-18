@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-class ModuleTestingPage extends React.Component {
+class RevisionPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,10 +37,24 @@ class ModuleTestingPage extends React.Component {
       currentQuestion: 0,
       answers: [],
       updRequestIsSent: false,
+      moduleIndex: 0,
+      materials: [],
     };
     
     this.onNextButtonClick = this.onNextButtonClick.bind(this);
     this.calculateResults = this.calculateResults.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getRevisionModules(this.props.userId, this.props.match.params.languageId)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.revisionModules && nextProps.revisionModules) {
+      // создаем вопросы
+    }
+    
+    console.log(nextProps);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -176,6 +190,7 @@ class ModuleTestingPage extends React.Component {
   }
 
   render() {
+    /*
     return (
       <AppPageStructure>
         <LoadingContainer
@@ -187,7 +202,13 @@ class ModuleTestingPage extends React.Component {
         </LoadingContainer>
       </AppPageStructure>  
     );
+    */
+   return(
+     <div>
+       это тестирующий модуль
+       </div>
+   )
   }
 }
   
-export default withStyles(styles)(ModuleTestingPage);
+export default withStyles(styles)(RevisionPage);

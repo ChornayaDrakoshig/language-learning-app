@@ -23,35 +23,36 @@ class ModulePage extends React.Component {
   componentDidMount() {
     this.props.getCurrentModule(this.props.userId, this.props.match.params.moduleId)
   }
-render() {
-  const { classes } = this.props;
+
+  render() {
+    const { classes } = this.props;
   
-  return (
-    <AppPageStructure>
-      <Grid container justify="flex-start" spacing={16} className={classes.root}>
-       <Button component={Link} to={`/course/${this.props.languageId}`}>
-         <KeyboardArrowLeft />
-          <Typography>Назад к списку курсов</Typography>
-        </Button>
-      </Grid>
-      <Grid container justify="center" spacing={16} className={classes.root}>
-        <Grid item xs={6}> 
-          <Paper elevation={1}>
-            <Button component={Link} to={`/module/${this.props.match.params.moduleId}/words`}>
-              <Typography>Изучить слова</Typography>
-            </Button>
-          </Paper>
+    return (
+      <AppPageStructure>
+        <Grid container justify="flex-start" spacing={16} className={classes.root}>
+        <Button component={Link} to={`/course/${this.props.languageId}`}>
+          <KeyboardArrowLeft />
+            <Typography>Назад к списку курсов</Typography>
+          </Button>
         </Grid>
-        <Grid item xs={6}>
-          <Paper elevation={1}>
-            <Button component={Link} to={`/module/${this.props.match.params.moduleId}/test`}>
-              <Typography>Пройти тест</Typography>
-            </Button>
-          </Paper>
+        <Grid container justify="center" spacing={16} className={classes.root}>
+          <Grid item xs={6}> 
+            <Paper elevation={1}>
+              <Button component={Link} to={`/module/${this.props.match.params.moduleId}/words`}>
+                <Typography>Изучить слова</Typography>
+              </Button>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper elevation={1}>
+              <Button component={Link} to={`/module/${this.props.match.params.moduleId}/test`}>
+                <Typography>Пройти тест</Typography>
+              </Button>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-    </AppPageStructure>
-  );
-}
+      </AppPageStructure>
+    );
+  }
 }
 export default withStyles(styles)(ModulePage);

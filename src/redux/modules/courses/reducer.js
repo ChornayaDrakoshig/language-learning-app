@@ -11,7 +11,7 @@ const initialState = {
   currentCourse: [],
   tagsList: [],
   currentModule: [],
-  currentTestExtraQuestions: [],
+  revisionModules: [],
 };
 
 export function courses(state = initialState, action) {
@@ -22,7 +22,11 @@ export function courses(state = initialState, action) {
       return handleGetGurrentCourse(state, action);
     case courseConstants.GET_INFO:
       return handleGetModule(state, action);
-    
+    //case courseConstants.UPDATE_MODULE:
+    //  return handleUpdateModule(state, action);
+    case courseConstants.REVISION:
+      return handleGetRevisionModules(state, action);
+
     default: return state;
   }
 }
@@ -38,7 +42,11 @@ const handleGetAllCourses = (state, data) => {
     }
   });
 
-  return { ...state, allCoursesList: newCourses };
+  return {
+    ...state,
+    allCoursesList: newCourses,
+    currentCourse: [],
+  };
 };
 
 const handleGetGurrentCourse = (state, data) => {
@@ -55,6 +63,8 @@ const handleGetGurrentCourse = (state, data) => {
     ...state,
     currentCourse: course,
     tagsList: data.tags,
+    revisionModules: [],
+    currentModule: [],
   };
 }
 
@@ -67,7 +77,11 @@ const handleGetModule = (state, data) => {
     }
   });
 
-  return { ...state, currentModule: newModule, currentTestExtraQuestions: data.onLearning};
+  return { ...state, currentModule: newModule};
 };
 
 export default courses;
+
+const handleGetRevisionModules = (state, data) => {
+  return {...state, revisionModules: data.modules}
+}

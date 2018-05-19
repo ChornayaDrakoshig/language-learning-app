@@ -20,6 +20,7 @@ class ModulePage extends React.Component {
     this.state = {
       inEnded: false,
       currentQuestion: 0,
+      updRequestIsSent: false,
     };
     
     this.onNextButtonClick=this.onNextButtonClick.bind(this);
@@ -29,13 +30,13 @@ class ModulePage extends React.Component {
     const number = this.state.currentQuestion;
     
     if (number === this.props.learningData.length - 1) {
-      this.setState({isEnded: true});  
+      this.setState({isEnded: true, updRequestIsSent: true}, () => 
+        this.props.updateModuleAfterLearning(this.props.userId, this.props.match.params.moduleId, this.props.languageId)
+      );
     }
     else {
       this.setState({currentQuestion: number+1});
     }
-    /// как обращаться к значению предыдущего стейта
-    // или как-то передавать id
   }
   
   renderEndingMessage() {

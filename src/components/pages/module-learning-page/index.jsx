@@ -1,10 +1,11 @@
 import {connect} from 'react-redux';
-//import {bindActionCreators} from 'redux';
-//import {getCurrentCourse} from 'redux/modules/courses/actions.js';
+import { bindActionCreators } from 'redux';
+import { updateModuleAfterLearning } from 'redux/modules/courses/actions.js';
 import ModuleLearningPage from './ModuleLearningPage.jsx';
 
 function mapStateToProps(state) {
   return {
+    userId: state.user.id,
     learningData: (state.courses.currentModule) ? state.courses.currentModule : [], 
     languageId: state.app.currentCourse,
     appIsLoading: state.app.isLoading,
@@ -12,7 +13,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    //getCurrentCourse: bindActionCreators(getCurrentCourse, dispatch),
+    updateModuleAfterLearning: bindActionCreators(updateModuleAfterLearning, dispatch),
   };
 }
 

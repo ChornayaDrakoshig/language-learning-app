@@ -46,8 +46,20 @@ export const loginSuccess = (data) => ({
   },
 });
 
-// TODO экшн для получения learning patterns
-// запрос + успешный, успешный экспортим в курсы
+export const getLearningPatternSuccess = (data) => {  
+  let learningPattern = {};
+  learningPattern[data.language_id] = {
+      audio: (data.aud_success > 0) ? (data.aud_total / data.aud_success) : 1,
+      images: (data.img_success > 0) ? (data.img_total / data.img_success) : 1,
+      selecting: (data.sel_success > 0) ? (data.sel_total / data.sel_success) : 1,
+      typing: (data.wri_success > 0) ? (data.wri_total / data.wri_success) : 1,
+    }  
+
+  return {
+    type: userConstants.GET_LEARNING_PATTERNS,
+    pattern: learningPattern,
+  }
+};
 
 export const logout = () => ({
   type: userConstants.LOGOUT,

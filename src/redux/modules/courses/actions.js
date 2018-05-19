@@ -1,5 +1,6 @@
 import {courseConstants} from './actionConstants.js';
 import { wait, success, error } from 'redux/modules/app/actions.js';
+import { getLearningPatternSuccess } from 'redux/modules/user/actions.js';
 const superagent = require('superagent');
 
 export const getAllCoursesList = (userId) => {
@@ -85,41 +86,38 @@ export const getCurrentModuleSuccess = (data) => ({
   onLearning: data.onLearning,
 });
 
-export const updateModuleAfterTesting = (userId, moduleId, resultsByTaskType) => {
-  // TODO post from it!
+export const updateModuleAfterTesting = (userId, moduleId, languageId, resultsByTaskType) => {
   return dispatch => {
     superagent
-      .get('http://localhost:4000/upd_module')
+      .put('http://localhost:4000/upd_module')
       .set('Accept', 'application/json')
-      .query({ userId, moduleId, ...resultsByTaskType })
+      .query({ userId, moduleId, languageId, resultsByTaskType })
       .send()
       .end((err, res) => {
         if (err) {
           dispatch(error('ошибка обновления информации'));
         } else {
-          //const answer = JSON.parse(res.text);
-          //dispatch(getCurrentModuleSuccess(answer));          
+          const answer = JSON.parse(res.text);
+          dispatch(getLearningPatternSuccess(answer.learningPattern[0]));          
           dispatch(success());
         }
       });
   };
-  
 };
 
-export const updateModuleAfterLearning = (userId, moduleId) => {
-  
+export const updateModuleAfterLearning = (userId, moduleId, languageId) => {
   return dispatch => {
     superagent
-      .get('http://localhost:4000/upd_module')
+      .put('http://localhost:4000/upd_module')
       .set('Accept', 'application/json')
-      .query({ userId, moduleId })
+      .query({ userId, moduleId, languageId })
       .send()
       .end((err, res) => {
         if (err) {
           dispatch(error('ошибка обновления информации'));
         } else {
-          //const answer = JSON.parse(res.text);
-          //dispatch(getCurrentModuleSuccess(answer));          
+          const answer = JSON.parse(res.text);
+          dispatch(getLearningPatternSuccess(answer.learningPattern[0]));
           dispatch(success());
         }
       });

@@ -1,10 +1,5 @@
 import {courseConstants} from './actionConstants.js';
 const serverAdress = 'http://localhost:4000/';
-/*
-new Audio("http://localhost:4000/1.mp3"),
-
-из полученной инфы замапить нужную
-*/
 
 const initialState = {
   allCoursesList: [],
@@ -22,8 +17,6 @@ export function courses(state = initialState, action) {
       return handleGetGurrentCourse(state, action);
     case courseConstants.GET_INFO:
       return handleGetModule(state, action);
-    //case courseConstants.UPDATE_MODULE:
-    //  return handleUpdateModule(state, action);
     case courseConstants.REVISION:
       return handleGetRevisionModules(state, action);
 

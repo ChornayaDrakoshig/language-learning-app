@@ -1,4 +1,5 @@
 export const userConstants = {
   LOGIN: 'LOGIN_USER',
+  GET_LEARNING_PATTERNS: 'GET_LEARNING_PATTERNS',
   LOGOUT: 'LOGOUT_USER',
 };

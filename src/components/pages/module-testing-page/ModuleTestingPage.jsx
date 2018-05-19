@@ -79,9 +79,8 @@ class ModuleTestingPage extends React.Component {
     if (!this.state.updRequestIsSent) {
       const resultsByTaskType = resultsByQuestionType(this.state.answers);
       this.setState({updRequestIsSent: true}, () => 
-        this.props.updateModuleAfterTesting(this.props.userId, this.props.match.params.moduleId, resultsByTaskType)
+        this.props.updateModuleAfterTesting(this.props.userId, this.props.match.params.moduleId, this.props.languageId, resultsByTaskType)
       );
-      console.log(resultsByTaskType);
     }
   }
 
@@ -94,7 +93,7 @@ class ModuleTestingPage extends React.Component {
     persentage /= this.state.answers.length;
     let endingMessageString = '';
     if (persentage >= 0.6) {
-      endingMessageString = `Поздравляем, вы успешно прошли тест, правильно ответив на ${persentage * 100}% вопросов`;
+      endingMessageString = `Поздравляем, вы успешно прошли тест, правильно ответив на ${(persentage * 100).toFixed(1)}% вопросов`;
     } else {
       endingMessageString = 'Вы набрали менее 60% правильных ответов. Рекомендуем повторить этот модуль ещё раз.';
     }

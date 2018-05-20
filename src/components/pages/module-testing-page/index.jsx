@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { getCurrentModule, updateModuleAfterTesting } from 'redux/modules/courses/actions.js';
+import { updateModuleAfterTesting } from 'redux/modules/courses/actions.js';
 import { wait, success } from 'redux/modules/app/actions.js';
 import ModuleTestingPage from './ModuleTestingPage.jsx';
 
@@ -18,7 +18,6 @@ function mapDispatchToProps(dispatch) {
   return {
     wait: bindActionCreators(wait, dispatch),
     success: bindActionCreators(success, dispatch),
-    getCurrentModule: bindActionCreators(getCurrentModule, dispatch),
     updateModuleAfterTesting: bindActionCreators(updateModuleAfterTesting, dispatch),
   };
 }

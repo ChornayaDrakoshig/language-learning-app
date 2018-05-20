@@ -125,8 +125,8 @@ export const updateModuleAfterLearning = (userId, moduleId, languageId) => {
   
 };
 
-export const getRevisionModules = (userId, languageId) => {
-  
+export const getRevisionModule = (userId, languageId) => {
+  console.log(userId, languageId);
   return dispatch => {
     dispatch(wait());
     superagent
@@ -140,7 +140,7 @@ export const getRevisionModules = (userId, languageId) => {
         } else {
           if (res.text) {
             const answer = JSON.parse(res.text);
-            dispatch(getRevisionModulesSuccess(answer));
+            dispatch(getRevisionModuleSuccess(answer));
           }
           dispatch(success());
         }
@@ -149,7 +149,7 @@ export const getRevisionModules = (userId, languageId) => {
   
 };
 
-export const getRevisionModulesSuccess = (data) => ({
+export const getRevisionModuleSuccess = (data) => ({
   type: courseConstants.REVISION,
   modules: data.content,
 });

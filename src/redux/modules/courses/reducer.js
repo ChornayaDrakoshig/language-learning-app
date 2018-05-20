@@ -56,7 +56,7 @@ const handleGetGurrentCourse = (state, data) => {
     ...state,
     currentCourse: course,
     tagsList: data.tags,
-    revisionModules: [],
+    revisionModule: [],
     currentModule: [],
   };
 }
@@ -76,5 +76,5 @@ const handleGetModule = (state, data) => {
 export default courses;
 
 const handleGetRevisionModules = (state, data) => {
-  return {...state, revisionModules: data.modules}
+  return {...state, revisionModule: data.modules}
 }

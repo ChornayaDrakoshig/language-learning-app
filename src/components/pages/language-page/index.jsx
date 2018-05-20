@@ -6,7 +6,12 @@ import LanguagePage from './LanguagePage.jsx';
 
 function mapStateToProps(state) {
   return {
-    modules: (state.courses.currentCourse) ? state.courses.currentCourse : [], 
+    searchRow: state.app.filters.searchRow,
+    tag: state.app.filters.tag,
+    showOnLearning: state.app.filters.showOnLearning,
+    showNew: state.app.filters.showNew,
+    tagList: state.courses.tagsList,
+    modules: state.courses.currentCourse, 
     userId: state.user.id,
     appIsLoading: state.app.isLoading,
   };

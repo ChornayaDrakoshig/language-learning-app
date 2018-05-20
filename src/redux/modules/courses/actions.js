@@ -125,8 +125,7 @@ export const updateModuleAfterLearning = (userId, moduleId, languageId) => {
   
 };
 
-export const getRevisionModule = (userId, languageId) => {
-  console.log(userId, languageId);
+export const getRevisionModule = (userId, languageId) => {  
   return dispatch => {
     dispatch(wait());
     superagent

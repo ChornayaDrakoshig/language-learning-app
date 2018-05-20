@@ -29,9 +29,36 @@ class LanguagePage extends React.Component {
   }
 
   renderModules() {
+    let filteredModules = this.props.modules;
+
+    if (this.props.searchRow.length > 0) {
+      const queryRegexp = new RegExp(this.props.searchRow, 'i');
+      filteredModules = filteredModules.filter(
+        item => ('title' in item ? item.title.match(queryRegexp) : false)
+      );
+    }
+
+    if (this.props.tag > 0) {
+      filteredModules = filteredModules.filter(
+        item => ('tag_id' in item ? (item.tag_id === this.props.tag) : false)
+      );
+    }
+    
+    if (!this.props.showOnLearning) {
+      filteredModules = filteredModules.filter(
+        item => (!item.onLearning)
+      );
+    }
+
+    if (!this.props.showNew) {
+      filteredModules = filteredModules.filter(
+        item => (item.onLearning)
+      );
+    }
+    
     return (
       <Grid container justify="flex-start" spacing={16}>
-        {this.props.modules.map((module) => 
+        {filteredModules.map((module) => 
           <ModulePaper
             key={module.id}
             module={module}

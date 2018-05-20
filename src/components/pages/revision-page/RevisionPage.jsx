@@ -11,7 +11,6 @@ class RevisionPage extends React.Component {
   
   /* TODO если получили ответ и контента нету просто вывести мол нечего повторять*/
   componentDidMount() {
-    console.log(this.props.match.params.languageId);
     this.props.getRevisionModule(this.props.userId, this.props.match.params.languageId);
   }
 
@@ -22,7 +21,6 @@ class RevisionPage extends React.Component {
   }
 
   render() {
-    console.log(this.state.moduleId);
     if (this.state.moduleId) {
       return (
         <TestingModule {...this.props} moduleId={this.state.moduleId} />

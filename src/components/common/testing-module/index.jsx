@@ -164,13 +164,13 @@ class TestingModule extends React.Component {
       onNextButtonClick: this.onNextButtonClick,
     }
     switch (questions[currentQuestion].questionType) {
-      case 'audio': return <AudioTestPaper key={`question-${currentQuestion}`} item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick} />;
-      case 'image': return <ImageTestPaper key={`question-${currentQuestion}`} item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick}  />;
-      case 'typing': return <TypingTestPaper key={`question-${currentQuestion}`} item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick} />;
-      case 'selectionW': return <SelectTestPaperForWord key={`question-${currentQuestion}`} item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick} />;
+      case 'audio': return <AudioTestPaper {...props} />;
+      case 'image': return <ImageTestPaper {...props} />;
+      case 'typing': return <TypingTestPaper {...props} />;
+      case 'selectionW': return <SelectTestPaperForWord {...props} />;
       case 'selectionS': return <SelectTestPaperForSentence {...props} />;
 
-      default: return <TypingTestPaper item={questions[currentQuestion]} onNextButtonClick={this.onNextButtonClick} />;
+      default: return null ;
     }
   }
 

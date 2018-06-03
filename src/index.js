@@ -18,7 +18,7 @@ const theme = createMuiTheme({
     primary: {
       light: '#80DEEA',
       main: '#00BCD4',
-      dark: '#4DD0E1',
+      dark: '#00ACC1',
     },
     secondary: {
       light: '#C5E1A5',
@@ -40,7 +40,7 @@ const store = createStore(
     )
   )
 );
-console.log(theme);
+
 ReactDOM.render(
   <HashRouter>
     <Provider store={store}>

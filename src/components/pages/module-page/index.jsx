@@ -5,7 +5,9 @@ import ModulePage from './ModulePage.jsx';
 
 function mapStateToProps(state) {
   return {
-    learningData: (state.courses.currentModule) ? state.courses.currentModule : [], 
+    learningData: state.courses.currentModule || [], 
+    modulesInfo: state.courses.currentCourse || [],
+    tagsList: state.courses.tagsList || [],
     userId: state.user.id,
     languageId: state.app.currentCourse,
   };

@@ -44,7 +44,7 @@ render() {
             <Typography type="title">{this.props.module.title}</Typography>  
           </Grid>
           <Grid item>
-            <Button component={Link} to={`/module/${this.props.module.id}`}>
+            <Button color="primary" component={Link} to={`/module/${this.props.module.id}`}>
               Открыть модуль
             </Button>
           </Grid>

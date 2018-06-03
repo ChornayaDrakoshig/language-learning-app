@@ -11,15 +11,14 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
   root: {
-    color: theme.palette.secondary.main,
-    '&$checked': {
-      color: theme.palette.secondary.main,
-    },
-  },
-  checked: {},
-  width: {
     width: '100%',
-  }
+  },
+  checkboxDefault: {
+    color: theme.palette.secondary.main,
+  },
+  checkboxChecked: {
+    color: theme.palette.secondary.main,
+  },
 });
 
 class Filters extends React.Component {
@@ -55,7 +54,7 @@ class Filters extends React.Component {
             id="input-with-icon-textfield"
             value={this.props.searchRow}
             onChange={this.handleSearchChange}
-            className={classes.width}
+            className={classes.root}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -66,7 +65,7 @@ class Filters extends React.Component {
           />
         </Grid>
         <Grid item xs={6}>
-          <FormControl className={classes.width}>
+          <FormControl className={classes.root}>
             <Select
               native
               value={this.props.tag}
@@ -86,8 +85,8 @@ class Filters extends React.Component {
                 onChange={() => this.props.setFilterOnLearning(!this.props.showOnLearning)}
                 value="onLearning"
                 classes={{
-                  root: classes.root,
-                  checked: classes.checked,
+                  default: classes.checkboxDefault,
+                  checked: classes.checkboxChecked,
                 }}
               />
             }
@@ -102,8 +101,8 @@ class Filters extends React.Component {
                 onChange={() => this.props.setFilterNew(!this.props.showNew)}
                 value="newModules"
                 classes={{
-                  root: classes.root,
-                  checked: classes.checked,
+                  default: classes.checkboxDefault,
+                  checked: classes.checkboxChecked,
                 }}
               />
             }

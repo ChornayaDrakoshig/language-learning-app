@@ -10,6 +10,9 @@ const styles = {
     root: {
       marginTop: 10,
     },
+    textColor: {
+      color: 'white',
+    }
   };
   
 class LoginForm extends React.Component {
@@ -67,8 +70,8 @@ class LoginForm extends React.Component {
           </FormGroup>      
         </Grid>
         <Grid item>
-          <Button raised onClick={this.handleSubmit}>
-            <Typography>Войти</Typography>
+          <Button raised color="primary" onClick={this.handleSubmit}>
+            <Typography className={classes.textColor}>Войти</Typography>
           </Button>       
         </Grid>
       </Grid>

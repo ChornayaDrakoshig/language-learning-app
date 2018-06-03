@@ -6,7 +6,7 @@ const initialState = {
   currentCourse: [],
   tagsList: [],
   currentModule: [],
-  revisionModules: [],
+  revisionModule: [],
 };
 
 export function courses(state = initialState, action) {
@@ -66,6 +66,7 @@ const handleGetModule = (state, data) => {
     return {
       ...item,
       audioSrc: `${serverAdress}audio/${item.id}.mp3`,
+      audio: new Audio(`${serverAdress}audio/${item.id}.mp3`),
       imageSrc: `${serverAdress}content/${item.imageId}.jpg`,
     }
   });

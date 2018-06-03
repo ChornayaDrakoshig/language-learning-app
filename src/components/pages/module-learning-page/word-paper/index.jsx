@@ -33,19 +33,18 @@ class WordPaper extends React.Component {
     super(props);
     this.state = {
       isPlaying: false,
-      audio: new Audio(this.props.content.audioSrc),
     };
 
     this.onPlayButtonClick=this.onPlayButtonClick.bind(this);
   }
-  
+
   onPlayButtonClick() {
     let status = this.state.isPlaying;
-  
+
     if(status === true) {
-      status = false; this.state.audio.play();
+      status = false; this.props.content.audio.pause();
     } else {
-      status = true; this.state.audio.pause();
+      status = true; this.props.content.audio.play();
     }
     this.setState({ isPlaying: status });
   }
@@ -70,7 +69,7 @@ class WordPaper extends React.Component {
             >
               <PlayArrow />
             </IconButton>
-            <audio id="audio"><source src={this.props.content.audioSrc} /></audio>
+            <audio id="audio"><source src={this.props.content.audioSrc} alt={this.props.content.native_language} /></audio>
           </Grid>
                     
           <Grid item>

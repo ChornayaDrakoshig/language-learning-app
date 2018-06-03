@@ -29,7 +29,6 @@ class AudioTestPaper extends React.Component {
     super(props);
     this.state = {
       isPlaying: false,
-      audio: new Audio(this.props.item.audioSrc),
       value: '',
     };
 
@@ -42,9 +41,9 @@ class AudioTestPaper extends React.Component {
     let status = this.state.isPlaying;
   
     if(status === true) {
-      status = false; this.state.audio.play();
+      status = false; this.props.item.audio.play();
     } else {
-      status = true; this.state.audio.pause();
+      status = true; this.props.item.audio.pause();
     }
     this.setState({ isPlaying: status });
   }

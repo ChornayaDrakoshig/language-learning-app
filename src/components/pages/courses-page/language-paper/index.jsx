@@ -7,11 +7,14 @@ import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 
-const styles = {
+const styles = theme => ({
   root: {
     marginTop: 25,
   },
-};
+  button: {
+    color: theme.palette.primary.dark,
+  },
+});
 
 class LanguagePaper extends React.Component {
   constructor(props) {
@@ -33,7 +36,7 @@ render() {
             <Avatar src={this.props.image} />  
           </Grid>
           <Grid item>
-            <Button component={Link} to={`/course/${this.props.id}`}>
+            <Button color="primary" className={classes.button} component={Link} to={`/course/${this.props.id}`}>
               {(this.props.onLearning) ? 'Открыть курс' : 'Начать курс'}
             </Button>
           </Grid>

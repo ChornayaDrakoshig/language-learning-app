@@ -15,6 +15,10 @@ const styles = {
   root: {
     marginTop: 25,
   },
+  revisionButton: {
+    padding: 15,
+    width: '100%',
+  },
 };
 
 class LanguagePage extends React.Component {
@@ -69,26 +73,28 @@ class LanguagePage extends React.Component {
   }
 
   render() {
-    const {classes} = this.props.classes;
+    const { classes } = this.props;
     
     return (
       <AppPageStructure>
-        <Grid className={this.props.classes.root}>
+        <Grid className={classes.root}>
           <Button component={Link} to="/courses/">
             <KeyboardArrowLeft />
             <Typography>К списку языков</Typography>
           </Button>
         </Grid>
-        <Grid container className={this.props.classes.root}>
+        <Grid container className={classes.root}>
           <Grid item xs={12}>
             <Paper elevation={1}>
-              <Button component={Link} to={`/revision-test/${this.props.match.params.languageId}`}>
+              <Button component={Link} className={classes.revisionButton}
+                to={`/revision-test/${this.props.match.params.languageId}`}  
+              >
                 Начать повторение
               </Button>
             </Paper>
           </Grid>
         </Grid>
-        <Grid container className={this.props.classes.root}>
+        <Grid container className={classes.root}>
           <Filters />
         </Grid>
         <LoadingContainer

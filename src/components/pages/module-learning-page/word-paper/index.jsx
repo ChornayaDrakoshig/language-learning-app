@@ -9,6 +9,7 @@ import PlayArrow from 'material-ui-icons/PlayArrow'
 const styles = {
   root: {
     minWidth: 450,
+    paddingBottom: 20,
   },
   image: {
     marginTop: 10,

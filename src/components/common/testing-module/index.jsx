@@ -14,7 +14,6 @@ import ImageTestPaper from 'components/common/testing-papers/image-test-paper';
 import SelectTestPaperForWord from 'components/common/testing-papers/select-test-paper/ForWord';
 import SelectTestPaperForSentence from 'components/common/testing-papers/select-test-paper/ForSentence';
 import TypingTestPaper from 'components/common/testing-papers/typing-test-paper';
-import mixArray from 'helper/mixArray.js';
 import composeTest from 'helper/composeTest.js';
 import resultsByQuestionType from 'helper/resultsByQuestionType.js';
 

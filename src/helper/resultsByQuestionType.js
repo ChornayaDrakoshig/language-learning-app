@@ -16,6 +16,8 @@ const resultsByQuestionType = (answers) => {
       case 'audio': resultsByTaskType.audioTotal += 1; if (item.isCorrect) resultsByTaskType.audioSuccess +=1; break;
       case 'selection': resultsByTaskType.selectionTotal += 1; if (item.isCorrect) resultsByTaskType.selectionSuccess +=1; break;
       case 'typing': resultsByTaskType.writtingTotal += 1; if (item.isCorrect) resultsByTaskType.writtingSuccess +=1; break;
+
+      default: break;
     }
   });
 

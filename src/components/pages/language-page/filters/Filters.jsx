@@ -1,12 +1,26 @@
 import React from 'react';
 import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
 import { FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import Checkbox from 'material-ui/Checkbox';
 import { InputAdornment } from 'material-ui/Input';
 import TextField from 'material-ui/TextField';
 import Search from 'material-ui-icons/Search';
+import { withStyles } from 'material-ui/styles';
+
+
+const styles = theme => ({
+  root: {
+    color: theme.palette.secondary.main,
+    '&$checked': {
+      color: theme.palette.secondary.main,
+    },
+  },
+  checked: {},
+  width: {
+    width: '100%',
+  }
+});
 
 class Filters extends React.Component {
   constructor(props) {
@@ -32,6 +46,8 @@ class Filters extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
         <Grid item xs={12}>
@@ -39,6 +55,7 @@ class Filters extends React.Component {
             id="input-with-icon-textfield"
             value={this.props.searchRow}
             onChange={this.handleSearchChange}
+            className={classes.width}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -49,16 +66,16 @@ class Filters extends React.Component {
           />
         </Grid>
         <Grid item xs={6}>
-          <FormControl >
+          <FormControl className={classes.width}>
             <Select
               native
               value={this.props.tag}
               onChange={this.handleTagChange}
             >
-              <option value="0">None</option>
+              <option value="0">Не выбрана</option>
               {this.renderSelectTagOptions()}
             </Select>
-            <FormHelperText>Without label</FormHelperText>
+            <FormHelperText>Выбор категории</FormHelperText>
           </FormControl>
         </Grid>
         <Grid item xs={3}>
@@ -68,7 +85,10 @@ class Filters extends React.Component {
                 checked={this.props.showOnLearning}
                 onChange={() => this.props.setFilterOnLearning(!this.props.showOnLearning)}
                 value="onLearning"
-                color="primary"
+                classes={{
+                  root: classes.root,
+                  checked: classes.checked,
+                }}
               />
             }
             label="Изученные модули"
@@ -81,7 +101,10 @@ class Filters extends React.Component {
                 checked={this.props.showNew}
                 onChange={() => this.props.setFilterNew(!this.props.showNew)}
                 value="newModules"
-                color="primary"
+                classes={{
+                  root: classes.root,
+                  checked: classes.checked,
+                }}
               />
             }
             label="Новые модули"
@@ -92,4 +115,4 @@ class Filters extends React.Component {
   }
 }
 
-export default Filters;
+export default withStyles(styles)(Filters);

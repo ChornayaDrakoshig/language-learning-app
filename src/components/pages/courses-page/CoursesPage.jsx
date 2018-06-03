@@ -4,6 +4,14 @@ import Typography from 'material-ui/Typography';
 import LoadingContainer from 'components/common/loading-container';
 import AppPageStructure from 'components/common/app-page-structure';
 import LanguagePaper from './language-paper';
+import { withStyles } from 'material-ui/styles';
+
+const styles = {
+  root: {
+    marginTop: 30,
+    marginBottom: -5,
+  },
+};
 
 class CoursesPage extends React.Component {
   constructor(props) {
@@ -13,14 +21,17 @@ class CoursesPage extends React.Component {
   
   componentDidMount(){
     this.props.getAllCoursesList(this.props.userId);
+    this.props.setCurrentCourse(0);
   }
   
   renderNewCourses() {
+    const { classes } = this.props;
+
     if (this.props.newCourses) {
       return (
         <React.Fragment>
           <Grid>
-            <Typography type="title">Доступные курсы</Typography>
+            <Typography type="title" className={classes.root}>Доступные курсы</Typography>
           </Grid>
           <Grid container justify="flex-start" spacing={16}>
             {this.props.newCourses.map((language) => 
@@ -41,11 +52,13 @@ class CoursesPage extends React.Component {
   }
 
   renderCoursesOnLearning() {
+    const { classes } = this.props;
+
     if (this.props.coursesOnLearning) {
       return (
         <React.Fragment>
           <Grid>
-            <Typography  type="title">Вы изучаете</Typography>
+            <Typography  type="title" className={classes.root}>Вы изучаете</Typography>
           </Grid>
           <Grid container justify="flex-start" spacing={16}>
             {this.props.coursesOnLearning.map((language) => 
@@ -54,7 +67,7 @@ class CoursesPage extends React.Component {
                 id={language.id}
                 title={language.language}
                 image={language.imageSrc}
-                onLearning={language.onLearnig}
+                onLearning={language.onLearning}
               />
             )}
           </Grid>
@@ -80,4 +93,5 @@ class CoursesPage extends React.Component {
     );
   }
 }
-export default CoursesPage;
+
+export default withStyles(styles)(CoursesPage);

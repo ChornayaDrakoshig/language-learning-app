@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = {
     root: {
+      marginTop: 10,
     },
   };
   
@@ -37,8 +38,10 @@ class LoginForm extends React.Component {
   }
   
   render() {  
+    const { classes } = this.props;
+
     return (
-      <Grid container direction="column" alignItems="center" justify="center">
+      <Grid container direction="column" alignItems="center" justify="center" spacing={8}>
         <Grid item>
           <FormGroup>
             <ControlLabel>Логин или E-mail:</ControlLabel>
@@ -47,6 +50,7 @@ class LoginForm extends React.Component {
               name="login"
               value={this.state.login}
               onChange={this.handleChange}
+              className={classes.root}
             />
           </FormGroup>      
         </Grid>
@@ -58,6 +62,7 @@ class LoginForm extends React.Component {
               name="password"
               value={this.state.password}
               onChange={this.handleChange}
+              className={classes.root}
             />
           </FormGroup>      
         </Grid>

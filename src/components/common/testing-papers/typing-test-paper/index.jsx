@@ -8,6 +8,7 @@ import TestingPageWrapper from '../TestingPageWrapper';
 
 const styles = {
   root: {
+    marginTop: 15,
   },
 };
 
@@ -54,6 +55,7 @@ class TypingTestPaper extends React.Component {
               value={this.state.value}
               placeholder="Ваш ответ"
               onChange={this.handleChange}
+              className={classes.root}
             />
           </FormGroup>      
         </Grid>

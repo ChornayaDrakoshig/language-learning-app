@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {logout} from 'redux/modules/user/actions.js';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { logout } from 'redux/modules/user/actions.js';
 import Header from './Header.jsx';
 
 function mapStateToProps(state) {

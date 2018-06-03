@@ -91,8 +91,6 @@ class ModulePage extends React.Component {
   }
 
 render() {
-  const {classes} = this.props;
-  
   return (
     <AppPageStructure>
       {(this.state.isEnded) ? this.renderEndingMessage() : this.renderWordForLearning()}

@@ -1,6 +1,7 @@
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {getAllCoursesList} from 'redux/modules/courses/actions.js';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getAllCoursesList } from 'redux/modules/courses/actions.js';
+import { setCurrentCourse } from 'redux/modules/app/actions.js';
 import CoursesPage from './CoursesPage.jsx';
 
 function mapStateToProps(state) {
@@ -16,6 +17,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getAllCoursesList: bindActionCreators(getAllCoursesList, dispatch),
+    setCurrentCourse: bindActionCreators(setCurrentCourse, dispatch),
   };
 }
 
